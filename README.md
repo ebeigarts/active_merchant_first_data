@@ -3,8 +3,8 @@ First Data gateway for Active Merchant
 
 ## Install
 
-```ruby
-  gem install active_merchant_first_data
+```bash
+$ gem install active_merchant_first_data
 ```
 
 ## Usage
