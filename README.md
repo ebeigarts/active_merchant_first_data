@@ -1,8 +1,6 @@
 First Data gateway for Active Merchant
 ======================================
 
-[http://www.firstdata.lv/](http://www.firstdata.lv/)
-
 ## Install
 
 ```ruby
@@ -51,9 +49,3 @@ require "active_merchant_first_data"
     ```
 
 5. [Set your WAN IP address](https://secureshop-test.firstdata.lv/report/merchantlist.do)
-
-## Running specs
-
-```bash
-$ MERCHANT_ID=1234567 PEM_PASSWORD=5x64jq8n234c bundle exec rake
-```

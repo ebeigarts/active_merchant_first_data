@@ -1,0 +1,27 @@
+---
+- !ruby/struct:VCR::HTTPInteraction
+  request: !ruby/struct:VCR::Request
+    method: :post
+    uri: https://secureshop-test.firstdata.lv:443/ecomm/ClientHandler
+    body: !!null 
+    headers: !!null 
+  response: !ruby/struct:VCR::Response
+    status: !ruby/struct:VCR::ResponseStatus
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Wed, 06 Jul 2011 22:38:38 GMT
+      content-type:
+      - text/html;charset=UTF-8
+      content-length:
+      - '662'
+    body: ! "<HTML>\n <HEAD>\n<meta http-equiv=\"content-type\" content=\"text/html;
+      charset=UTF-8\">\n<TITLE>Secure Payment Server</TITLE>\n </HEAD>\n <BODY onload=\"javascript:document.returnform.submit()\">\n
+      \ <FORM action=\"http://test.vitafoto.lv/ecomm/success\" method=\"POST\" name=\"returnform\">\n
+      \  <INPUT name=\"trans_id\" type=\"hidden\" value=\"xlzh0FV2NX84bNqSj2+T+2PEtQA=\">\n
+      \  <INPUT name=\"Ucaf_Cardholder_Confirm\" type=\"hidden\" value=\"0\">\n   \n
+      \ <DIV align=\"center\">\n    <H3>PAYMENT TRANSACTION PROCESSING ....</H3>\n
+      \   <NOSCRIPT> Please click the submit button below.<BR>\n     <INPUT name=\"submit\"
+      type=\"submit\" value=\"Submit\">\n    </NOSCRIPT>\n   </DIV>\n  </FORM>\n </BODY>\n</HTML>\n\r\n"
+    http_version: '1.1'

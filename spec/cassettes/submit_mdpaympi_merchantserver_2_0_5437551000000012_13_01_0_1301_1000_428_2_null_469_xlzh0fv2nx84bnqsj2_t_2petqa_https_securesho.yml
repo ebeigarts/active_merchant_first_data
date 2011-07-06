@@ -1,0 +1,37 @@
+---
+- !ruby/struct:VCR::HTTPInteraction
+  request: !ruby/struct:VCR::Request
+    method: :post
+    uri: https://secureshop-test.firstdata.lv:443/mdpaympi/MerchantServer
+    body: !!null 
+    headers: !!null 
+  response: !ruby/struct:VCR::Response
+    status: !ruby/struct:VCR::ResponseStatus
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Wed, 06 Jul 2011 22:38:38 GMT
+      content-type:
+      - text/html; charset=UTF-8
+      content-length:
+      - '1401'
+    body: ! "<HTML>\n <HEAD>\n  <META http-equiv=\"content-type\" content=\"text/html;
+      charset=utf-8\">\n  <TITLE>Secure Payment Server</TITLE>\n </HEAD>\n <BODY onload=\"javascript:document.returnform.submit()\">\n
+      \ <FORM action=\"/ecomm/ClientHandler\" method=\"POST\" name=\"returnform\">\n
+      \  <INPUT name=\"PAResSyntaxOK\" type=\"hidden\" value=\"false\"><INPUT name=\"PAResVerified\"
+      type=\"hidden\" value=\"false\"><INPUT name=\"version\" type=\"hidden\" value=\"2.0\"><INPUT
+      name=\"merchantID\" type=\"hidden\" value=\"469\"><INPUT name=\"xid\" type=\"hidden\"
+      value=\"xlzh0FV2NX84bNqSj2+T+2PEtQA=\"><INPUT name=\"mdStatus\" type=\"hidden\"
+      value=\"2\"><INPUT name=\"mdErrorMsg\" type=\"hidden\" value=\"N-status from
+      Directory Server: https://secureshop-test.firstdata.lv:9600/mdpayacs/vereq\"><INPUT
+      name=\"txstatus\" type=\"hidden\" value=\"N\"><INPUT name=\"iReqCode\" type=\"hidden\"
+      value=\"\"><INPUT name=\"iReqDetail\" type=\"hidden\" value=\"\"><INPUT name=\"vendorCode\"
+      type=\"hidden\" value=\"\"><INPUT name=\"eci\" type=\"hidden\" value=\"\"><INPUT
+      name=\"cavv\" type=\"hidden\" value=\"\"><INPUT name=\"cavvAlgorithm\" type=\"hidden\"
+      value=\"\"><INPUT name=\"MD\" type=\"hidden\" value=\"\"><INPUT name=\"digest\"
+      type=\"hidden\" value=\"zGpw3BiriuZjXgret5tgX4Lhud8=\">\n   <DIV align=\"center\">\n
+      \   <H3>PAYMENT TRANSACTION PROCESSING ....</H3>\n    <NOSCRIPT> Please click
+      the submit button below.<BR>\n     <INPUT name=\"submit\" type=\"submit\" value=\"Submit\">\n
+      \   </NOSCRIPT>\n   </DIV>\n  </FORM>\n </BODY>\n</HTML>"
+    http_version: '1.1'

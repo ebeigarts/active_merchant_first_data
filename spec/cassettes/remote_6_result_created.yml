@@ -1,0 +1,26 @@
+---
+- !ruby/struct:VCR::HTTPInteraction
+  request: !ruby/struct:VCR::Request
+    method: :post
+    uri: https://secureshop-test.firstdata.lv:8443/ecomm/MerchantHandler
+    body: !!null 
+    headers:
+      content-type:
+      - application/x-www-form-urlencoded
+  response: !ruby/struct:VCR::Response
+    status: !ruby/struct:VCR::ResponseStatus
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Wed, 06 Jul 2011 22:38:48 GMT
+      content-type:
+      - text/html; charset=UTF-8
+      content-length:
+      - '62'
+    body: ! 'RESULT: CREATED
+
+      3DSECURE: FAILED
+
+      CARD_NUMBER: ****************'
+    http_version: '1.1'
