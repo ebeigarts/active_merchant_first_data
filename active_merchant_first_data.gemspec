@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.summary     = "First Data gateway for Active Merchant"
   s.description = s.summary
 
-  s.files         = Dir.glob("{lib,spec}/**/*") + %w(README.md LICENSE)
+  s.files         = Dir.glob("{lib}/**/*") + %w(README.md LICENSE)
   s.require_paths = ["lib"]
 
   s.add_runtime_dependency "activemerchant", [">= 1.15.0"]
