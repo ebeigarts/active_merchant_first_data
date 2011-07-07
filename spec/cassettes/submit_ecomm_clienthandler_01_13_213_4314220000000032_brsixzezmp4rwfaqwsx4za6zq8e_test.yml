@@ -1,0 +1,59 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :post
+    uri: https://secureshop-test.firstdata.lv:443/ecomm/ClientHandler
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      content-type: 
+      - text/html;charset=UTF-8
+      date: 
+      - Thu, 07 Jul 2011 00:54:37 GMT
+      content-length: 
+      - "1597"
+      set-cookie: 
+      - ATA=40455C40C070495A7E92BAC7340DFB95; Expires=Sun, 06-Jul-2014 00:54:37 GMT
+    body: |
+      <HTML>
+       <HEAD>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <TITLE>Secure Payment Server</TITLE>
+       </HEAD>
+       <BODY onload="javascript:document.returnform.submit()">
+        <FORM action="/mdpaympi/MerchantServer" method="POST" name="returnform">
+         
+      	<INPUT name="version" type="hidden" value="2.0">
+      	<INPUT name="PAN" type="hidden" value="4314220000000032">
+      	<INPUT name="Ecom_Payment_Card_ExpDate_Year" type="hidden" value="13">
+      	<INPUT name="Ecom_Payment_Card_ExpDate_Month" type="hidden" value="01">
+      	<INPUT name="deviceCategory" type="hidden" value="0">
+      	<INPUT name="cardType" type="hidden" value="">
+              <INPUT name="expiry" type="hidden" value="1301">
+      	<INPUT name="purchAmount" type="hidden" value="1000">
+      	<INPUT name="currency" type="hidden" value="428">
+      	<INPUT name="exponent" type="hidden" value="2">
+      	<INPUT name="description" type="hidden" value="null">
+      	<INPUT name="merchantID" type="hidden" value="469">
+      	<INPUT name="xid" type="hidden" value="BRsIXZezmp4rWFAQWsx4Za6zq8E=">
+      	<INPUT name="okUrl" type="hidden" value="https://secureshop-test.firstdata.lv:443/ecomm/ClientHandler">
+      	<INPUT name="failUrl" type="hidden" value="https://secureshop-test.firstdata.lv:443/ecomm/ClientHandler">
+      	<INPUT name="MD" type="hidden" value="">
+      	<INPUT name="digest" type="hidden" value="JI5s11NekrCSEA7uGITI46hw4A8=">
+      
+      	<DIV align="center">
+          		<H3>PAYMENT TRANSACTION PROCESSING ....</H3>
+          		<NOSCRIPT> Please click the submit button below.<BR>
+           			<INPUT name="submit" type="submit" value="Submit">
+          		</NOSCRIPT>
+         	</DIV>
+          </FORM>
+       </BODY>
+      </HTML>
+      
+
+    http_version: "1.1"
