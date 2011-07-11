@@ -125,11 +125,6 @@ describe ActiveMerchant::Billing::FirstDataGateway do
         response[:result].should == "OK"
         response[:result_code].should == "000"
       end
-
-      # # Laikam nav tāds pakalpojums
-      # response = @gateway.credit(1000, @trans_id)
-      # response[:result].should == "OK"
-      # response[:result_code].should == "400"
     end
 
     it "4) should authorize and capture 10 Ls (Master)" do
@@ -177,7 +172,6 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       end
     end
 
-    # Laikam nav tāds piesēgts
     it "6) should have successful 3D-Secure authentication" do
       VCR.use_cassette('remote_6_purchase') do
         response = @gateway.purchase(1000, :client_ip_addr => @valid_ip)
@@ -191,8 +185,8 @@ describe ActiveMerchant::Billing::FirstDataGateway do
 
       VCR.use_cassette('remote_6_result_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        response[:result].should == "CREATED"
-        response[:'3dsecure'].should == 'FAILED'
+        response[:result].should == "OK"
+        response[:'3dsecure'].should == "AUTHENTICATED"
       end
     end
 
@@ -210,8 +204,8 @@ describe ActiveMerchant::Billing::FirstDataGateway do
 
       VCR.use_cassette('remote_7_result_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        response[:result].should == "CREATED"
-        response[:'3dsecure'].should == 'FAILED'
+        response[:result].should == "DECLINED"
+        response[:'3dsecure'].should == "DECLINED"
       end
     end
 
@@ -229,8 +223,8 @@ describe ActiveMerchant::Billing::FirstDataGateway do
 
       VCR.use_cassette('remote_8_result_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        response[:result].should == "CREATED"
-        response[:'3dsecure'].should == 'FAILED'
+        response[:result].should == "DECLINED"
+        response[:'3dsecure'].should == "DECLINED"
       end
     end
 
@@ -334,12 +328,23 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       end
       ActiveMerchant::Billing::FirstDataGateway.logger.debug "URL:" + url.to_s
       # break if we are redirecting back
-      break unless url.include?(redirect_uri.host)
+      unless url.include?(redirect_uri.host)
+        # sleep 5
+        break
+      end
       # get input field names, values into params
       params = {}
-      response_body.split(/input/i).collect{ |input| input.scan(/name="([^\"]*)".*value="([^\"]*)"/i).flatten }.reject(&:blank?).
+      response_body.split(/input/i).
+        collect{ |input| input.scan(/name="([^\"]*)".*value="([^\"]*)"/im).flatten }.
+        reject(&:blank?).
         each { |k, v| params[k] = v }
+      # 3D Secure password
+      if response_body =~ %r{<input type="password" name="password"/>}
+        params["password"] = "password"
+        params["submit"] = "OK"
+      end
       response_body = submit_form(url, params)
+      # puts response_body
     end
   end
 end

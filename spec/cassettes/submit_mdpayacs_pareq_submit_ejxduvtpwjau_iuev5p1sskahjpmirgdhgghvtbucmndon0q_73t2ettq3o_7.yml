@@ -1,0 +1,44 @@
+---
+- !ruby/struct:VCR::HTTPInteraction
+  request: !ruby/struct:VCR::Request
+    method: :post
+    uri: https://secureshop-test.firstdata.lv:443/mdpayacs/pareq
+    body: !!null 
+    headers: !!null 
+  response: !ruby/struct:VCR::Response
+    status: !ruby/struct:VCR::ResponseStatus
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Mon, 11 Jul 2011 13:07:59 GMT
+      pragma:
+      - no-cache
+      expires:
+      - Thu, 01 Jan 1970 00:00:00 GMT
+      cache-control:
+      - no-cache
+      set-cookie:
+      - JSESSIONID=1CCBAEB212E9412EECE7DA9FDEABDA4D; Path=/mdpayacs; Secure
+      content-type:
+      - text/html; charset=UTF-8
+      content-length:
+      - '5480'
+    body: ! "<!-- MDPay ACS Response Template -->\n<!-- ===========================
+      -->\n<!-- $Id: redirect_www,v 1.1 2003/10/29 19:31:22 veparkki Exp $ -->\n\n<!DOCTYPE
+      HTML PUBLIC \"-//W3C//DTD HTML 4.01//EN\" \"http://www.w3.org/TR/html4/strict.dtd\">\n\n<META
+      HTTP-EQUIV=\"Pragma\" CONTENT=\"no-cache\">\n<META HTTP-EQUIV=\"Expires\" CONTENT=\"-1\">\n\n<html>\n<head><title>Processing
+      your 3-D Secure Transaction</title>\n\n<script language=\"javascript\">\n\nfunction
+      onLoadHandler()\n{\n       document.PAResForm.submit();\n}\n\n</script>\n\n</head>\n<body
+      onLoad=\"onLoadHandler();\">\n\n<form name=\"PAResForm\" \n      action=\"https://secureshop-test.firstdata.lv:443/mdpaympi/MerchantServer?msgid=2021525\"
+      \n      method=\"POST\"\n      3dsaction=\"auto\">\n<noscript>\n    <br>\n    <br>\n
+      \   <center>\n    <h1>Processing your 3-D Secure Transaction</h1>\n    <h2>\n
+      \   JavaScript is currently disabled or is not supperted by your browser.<br>\n
+      \   <h3>Please click on the Submit button to continue the processing of\n        your
+      3-D secure transaction.</h3>\n    <input type=\"submit\" value=\"Submit\" 3dsinput=\"ok\">\n
+      \   </center>\n</noscript>\n\n<input type=\"hidden\" \n       name=\"PaRes\"
+      \n       value=\"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\"\n
+      \      3dsinput>\n<input type=\"hidden\" \n       name=\"MD\" \n       value=\"\"\n
+      \      3dsinput>\n</form>\n\n</body>\n</html>\n\n<META HTTP-EQUIV=\"Pragma\"
+      CONTENT=\"no-cache\">\n<META HTTP-EQUIV=\"Expires\" CONTENT=\"-1\">\n"
+    http_version: '1.1'

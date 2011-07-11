@@ -13,10 +13,10 @@
       message: OK
     headers:
       date:
-      - Mon, 11 Jul 2011 11:24:36 GMT
+      - Mon, 11 Jul 2011 13:08:20 GMT
       content-type:
       - text/html; charset=UTF-8
       content-length:
       - '44'
-    body: ! 'TRANSACTION_ID: 9t72k06FykJirSj2j9KkDanr2OA='
+    body: ! 'TRANSACTION_ID: /Jhk87W3P7p0dL95853Z7mR37F8='
     http_version: '1.1'

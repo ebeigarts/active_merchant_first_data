@@ -13,7 +13,7 @@
       message: OK
     headers:
       date:
-      - Mon, 11 Jul 2011 11:24:40 GMT
+      - Mon, 11 Jul 2011 13:08:29 GMT
       content-type:
       - text/html; charset=UTF-8
       content-length:
@@ -24,9 +24,9 @@
 
       3DSECURE: NOTPARTICIPATED
 
-      RRN: 119214109279
+      RRN: 119216109417
 
-      APPROVAL_CODE: 403710
+      APPROVAL_CODE: 947751
 
       CARD_NUMBER: ****************'
     http_version: '1.1'
