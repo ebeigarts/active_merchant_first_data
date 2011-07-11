@@ -243,6 +243,56 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       end
     end
 
+    it "10) reversal for SMS authorization from case '1'" do
+      VCR.use_cassette('remote_10_purchase') do
+        response = @gateway.purchase(1000, :client_ip_addr => @valid_ip)
+        response[:transaction_id].should =~ @valid_response[:trans_id]
+        @trans_id = response[:transaction_id]
+      end
+
+      enter_credit_card_data(@trans_id, @visa_card_params)
+
+      VCR.use_cassette('remote_10_result_ok') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "OK"
+        response[:result_code].should == "000"
+      end
+
+      VCR.use_cassette('remote_10_credit') do
+        response = @gateway.credit(1000, @trans_id)
+        response[:result].should == "OK"
+        response[:result_code].should == "400"
+      end
+    end
+
+    it "11) reversal for DMS transaction from case '3'" do
+      VCR.use_cassette('remote_11_authorize') do
+        response = @gateway.authorize(1000, :client_ip_addr => @valid_ip)
+        response[:transaction_id].should =~ @valid_response[:trans_id]
+        @trans_id = response[:transaction_id]
+      end
+
+      enter_credit_card_data(@trans_id, @visa_card_params)
+
+      VCR.use_cassette('remote_11_result_ok') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "OK"
+        response[:result_code].should == "000"
+      end
+
+      VCR.use_cassette('remote_11_capture') do
+        response = @gateway.capture(1000, @trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "OK"
+        response[:result_code].should == "000"
+      end
+
+      VCR.use_cassette('remote_11_credit') do
+        response = @gateway.credit(1000, @trans_id)
+        response[:result].should == "OK"
+        response[:result_code].should == "400"
+      end
+    end
+
     it "12) should close business day" do
       VCR.use_cassette('remote_12_close_business_day') do
         response = @gateway.close_day

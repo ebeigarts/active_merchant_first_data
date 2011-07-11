@@ -1,0 +1,22 @@
+---
+- !ruby/struct:VCR::HTTPInteraction
+  request: !ruby/struct:VCR::Request
+    method: :post
+    uri: https://secureshop-test.firstdata.lv:8443/ecomm/MerchantHandler
+    body: !!null 
+    headers:
+      content-type:
+      - application/x-www-form-urlencoded
+  response: !ruby/struct:VCR::Response
+    status: !ruby/struct:VCR::ResponseStatus
+      code: 200
+      message: OK
+    headers:
+      date:
+      - Mon, 11 Jul 2011 11:30:29 GMT
+      content-type:
+      - text/html; charset=UTF-8
+      content-length:
+      - '44'
+    body: ! 'TRANSACTION_ID: QhkEx9z3zdoKjzuyBUTwrYw2bx0='
+    http_version: '1.1'
