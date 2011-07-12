@@ -6,7 +6,7 @@ Gem::Specification.new do |s|
   s.authors     = ["Edgars Beigarts"]
   s.email       = ["edgars.beigarts@makit.lv"]
   s.homepage    = "https://github.com/ebeigarts/active_merchant_first_data"
-  s.summary     = "First Data gateway for Active Merchant"
+  s.summary     = "First Data Latvia gateway for Active Merchant"
   s.description = s.summary
 
   s.files         = Dir.glob("{lib}/**/*") + %w(README.md LICENSE)

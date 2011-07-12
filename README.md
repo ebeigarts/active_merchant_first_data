@@ -1,5 +1,5 @@
-First Data gateway for Active Merchant
-======================================
+First Data Latvia gateway for Active Merchant
+=============================================
 
 [![Continuous Integration status](https://secure.travis-ci.org/ebeigarts/active_merchant_first_data.png)](http://travis-ci.org/ebeigarts/active_merchant_first_data)
 
@@ -39,7 +39,7 @@ require "active_merchant_first_data"
 4. Convert the certificates and keys to `1234567_keystore.pem`
 
     ```bash
-    $ openssl pkcs12 -export -in 1234567.pem -out spec/certs/1234567_keystore.p12 -certfile spec/certs/ECOMM.pem -inkey spec/certs/1234567_key.pem
+    $ openssl pkcs12 -export -in spec/certs/1234567.pem -out spec/certs/1234567_keystore.p12 -certfile spec/certs/ECOMM.pem -inkey spec/certs/1234567_key.pem
     Enter pass phrase for 1234567_key.pem: 81f174259v45
     Enter Export Password: <empty>
     ```
