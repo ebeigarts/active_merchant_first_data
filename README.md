@@ -32,9 +32,11 @@ require "active_merchant_first_data"
 
 3. Copy the 3 files you received in e-mail to `spec/certs/`:
 
-    * 1234567.pem
-    * 1234567_certificate_chain.p7.pem
-    * ECOMM.pem
+    ```
+    1234567.pem
+    1234567_certificate_chain.p7.pem
+    ECOMM.pem
+    ```
 
 4. Convert the certificates and keys to `1234567_keystore.pem`
 
