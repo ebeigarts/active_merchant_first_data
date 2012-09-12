@@ -15,7 +15,7 @@ Gem::Specification.new do |s|
   s.add_runtime_dependency "activemerchant", [">= 1.15.0"]
 
   s.add_development_dependency "rake"
-  s.add_development_dependency "rspec", ["~> 2.6.0"]
-  s.add_development_dependency "vcr"
-  s.add_development_dependency "fakeweb"
+  s.add_development_dependency "rspec", ["~> 2.10"]
+  s.add_development_dependency "vcr", ["~> 1.11"]
+  s.add_development_dependency "fakeweb", ["~> 1.3"]
 end
