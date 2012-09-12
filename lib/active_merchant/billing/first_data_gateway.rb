@@ -23,10 +23,8 @@ module ActiveMerchant #:nodoc:
       # The gateway requires that a valid pem and password be passed
       # in the +options+ hash.
       #
-      # Options:
-      #
-      # * <tt>:pem</tt> -- The First Data cert/key (REQUIRED)
-      # * <tt>:pem_password</tt> -- The First Data password. (REQUIRED)
+      # @option options [String] :pem First Data cert/key (REQUIRED)
+      # @option options [String] :pem_password First Data cert password (REQUIRED)
       #
       def initialize(options = {})
         requires!(options, :pem, :pem_password)
@@ -37,12 +35,13 @@ module ActiveMerchant #:nodoc:
       # Perform a purchase, which is essentially an authorization and capture in a single operation.
       #
       # Registering of SMS transaction
-      # @param int $amount transaction amount in minor units, mandatory
-      # @param int $currency transaction currency code, mandatory
-      # @param string $ip clientís IP address, mandatory
-      # @param string $desc description of transaction, optional
-      # @param string $language authorization language identificator, optional
-      # @return string TRANSACTION_ID
+      #
+      # @param [Integer] amount transaction amount in minor units, mandatory
+      # @option params [Integer] :currency transaction currency code, mandatory
+      # @option params [String] :ip client's IP address, mandatory
+      # @option params [String] :desc description of transaction, optional
+      # @option params [String] :language authorization language identificator, optional
+      # @return [ActiveSupport::HashWithIndifferentAccess] TRANSACTION_ID
       #
       def purchase(amount, params = {})
         params = params.reverse_merge(
@@ -58,12 +57,13 @@ module ActiveMerchant #:nodoc:
       # charge the card.
       #
       # Registering of DMS authorisation
-      # @param int $amount transaction amount in minor units, mandatory
-      # @param int $currency transaction currency code, mandatory
-      # @param string $ip clientís IP address, mandatory
-      # @param string $desc description of transaction, optional
-      # @param string $language authorization language identificator, optional
-      # @return string TRANSACTION_ID
+      #
+      # @param [Integer] amount transaction amount in minor units, mandatory
+      # @option params [Integer] :currency transaction currency code, mandatory
+      # @option params [String] :ip client's IP address, mandatory
+      # @option params [String] :desc description of transaction, optional
+      # @option params [String] :language authorization language identificator, optional
+      # @return [ActiveSupport::HashWithIndifferentAccess] TRANSACTION_ID
       #
       def authorize(amount, params = {})
         params = params.reverse_merge(
@@ -79,12 +79,13 @@ module ActiveMerchant #:nodoc:
       # Captures the funds from an authorized transaction.
       #
       # Making of DMS transaction
-      # @param int $auth_id id of previously made successeful authorisation
-      # @param int $amount transaction amount in minor units, mandatory
-      # @param int $currency transaction currency code, mandatory
-      # @param string $ip clientís IP address, mandatory
-      # @param string $desc description of transaction, optional
-      # @return string RESULT, RESULT_CODE, RRN, APPROVAL_CODE
+      #
+      # @param [Integer] amount transaction amount in minor units, mandatory
+      # @param [Integer] trans_id id of previously made successeful authorisation
+      # @option params [Integer] :currency transaction currency code, mandatory
+      # @option params [String] :ip client's IP address, mandatory
+      # @option params [String] :desc description of transaction, optional
+      # @return [ActiveSupport::HashWithIndifferentAccess] RESULT, RESULT_CODE, RRN, APPROVAL_CODE
       #
       def capture(amount, trans_id, params = {})
         params = params.reverse_merge(
@@ -100,9 +101,9 @@ module ActiveMerchant #:nodoc:
 
       # Transaction result
       #
-      # @param int $trans_id transaction identifier, mandatory
-      # @param string $ip clientís IP address, mandatory
-      # @return string RESULT, RESULT_CODE, 3DSECURE, AAV, RRN, APPROVAL_CODE
+      # @param [Integer] trans_id transaction identifier, mandatory
+      # @option params [String] :ip client's IP address, mandatory
+      # @return [ActiveSupport::HashWithIndifferentAccess] RESULT, RESULT_CODE, 3DSECURE, AAV, RRN, APPROVAL_CODE
       #
       def result(trans_id, params = {})
         params = params.reverse_merge(
@@ -116,9 +117,10 @@ module ActiveMerchant #:nodoc:
       # credit() allows you to return money to a card that was previously billed.
       #
       # Transaction reversal
-      # @param int $trans_id transaction identifier, mandatory
-      # @param int $amount transaction amount in minor units, mandatory
-      # @return string RESULT, RESULT_CODE
+      #
+      # @param [Integer] amount transaction amount in minor units, mandatory
+      # @param [Integer] trans_id transaction identifier, mandatory
+      # @return [ActiveSupport::HashWithIndifferentAccess] RESULT, RESULT_CODE
       #
       def credit(amount, trans_id = nil)
         params = {
