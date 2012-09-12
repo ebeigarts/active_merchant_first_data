@@ -1,0 +1,83 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :post
+    uri: https://secureshop-test.firstdata.lv:443/mdpayacs/pareq
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      date: 
+        - Tue, 11 Sep 2012 19:53:07 GMT
+      pragma: 
+        - no-cache
+      expires: 
+        - Thu, 01 Jan 1970 00:00:00 GMT
+      cache-control: 
+        - no-cache
+      content-type: 
+        - text/html; charset=UTF-8
+      content-length: 
+        - "5476"
+    body: |
+      <!-- MDPay ACS Response Template -->
+      <!-- =========================== -->
+      <!-- $Id: redirect_www,v 1.1 2003/10/29 19:31:22 veparkki Exp $ -->
+      
+      <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+      
+      <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+      <META HTTP-EQUIV="Expires" CONTENT="-1">
+      
+      <html>
+      <head><title>Processing your 3-D Secure Transaction</title>
+      
+      <script language="javascript">
+      
+      function onLoadHandler()
+      {
+             document.PAResForm.submit();
+      }
+      
+      </script>
+      
+      </head>
+      <body onLoad="onLoadHandler();">
+      
+      <form name="PAResForm" 
+            action="https://secureshop-test.firstdata.lv:443/mdpaympi/MerchantServer?msgid=2437097" 
+            method="POST"
+            3dsaction="auto">
+      <noscript>
+          <br>
+          <br>
+          <center>
+          <h1>Processing your 3-D Secure Transaction</h1>
+          <h2>
+          JavaScript is currently disabled or is not supperted by your browser.<br>
+          <h3>Please click on the Submit button to continue the processing of
+              your 3-D secure transaction.</h3>
+          <input type="submit" value="Submit" 3dsinput="ok">
+          </center>
+      </noscript>
+      
+      <input type="hidden" 
+             name="PaRes" 
+             value="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"
+             3dsinput>
+      <input type="hidden" 
+             name="MD" 
+             value=""
+             3dsinput>
+      </form>
+      
+      </body>
+      </html>
+      
+      <META HTTP-EQUIV="Pragma" CONTENT="no-cache">
+      <META HTTP-EQUIV="Expires" CONTENT="-1">
+
+    http_version: "1.1"

@@ -1,0 +1,38 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :post
+    uri: https://secureshop-test.firstdata.lv:443/mdpaympi/MerchantServer?msgid=2437095
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      date: 
+        - Tue, 11 Sep 2012 19:52:49 GMT
+      content-type: 
+        - text/html; charset=UTF-8
+      content-length: 
+        - "1465"
+    body: |-
+      <HTML>
+       <HEAD>
+        <META http-equiv="content-type" content="text/html; charset=utf-8">
+        <TITLE>Secure Payment Server</TITLE>
+       </HEAD>
+      <!-- default/all_default/return_after.html -->
+       <BODY onload="javascript:document.returnform.submit()">
+        <FORM action="https://secureshop-test.firstdata.lv:443/ecomm/ClientHandler" method="POST" name="returnform">
+         <INPUT name="PAResSyntaxOK" type="hidden" value="true"><INPUT name="PAResVerified" type="hidden" value="true"><INPUT name="version" type="hidden" value="2.0"><INPUT name="merchantID" type="hidden" value="8000898"><INPUT name="xid" type="hidden" value="ZJS6H5H+O8954yj+EMhL8bw2WcU="><INPUT name="mdStatus" type="hidden" value="1"><INPUT name="mdErrorMsg" type="hidden" value="Authenticated"><INPUT name="txstatus" type="hidden" value="Y"><INPUT name="iReqCode" type="hidden" value=""><INPUT name="iReqDetail" type="hidden" value=""><INPUT name="vendorCode" type="hidden" value=""><INPUT name="eci" type="hidden" value="02"><INPUT name="cavv" type="hidden" value="jHceC8+AdiKSCBEAL7cuBUgAAAA="><INPUT name="cavvAlgorithm" type="hidden" value="3"><INPUT name="MD" type="hidden" value=""><INPUT name="digest" type="hidden" value="4KaJpXWV4wFZ+5YMGrBCmvaz5LM=" autocomplete="off">
+         <DIV align="center">
+          <H3>PAYMENT TRANSACTION PROCESSING ....</H3>
+          <NOSCRIPT> Please click the submit button below.<BR>
+           <INPUT name="submit" type="submit" value="Submit">
+          </NOSCRIPT>
+         </DIV>
+        </FORM>
+       </BODY>
+      </HTML>
+    http_version: "1.1"
