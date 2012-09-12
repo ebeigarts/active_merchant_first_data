@@ -28,7 +28,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
     }
 
     @master_card_params = {
-      :cardnr => '5437551000000012',
+      :cardnr => '5437551000000014',
       :validMONTH => '01',
       :validYEAR => @valid_year,
       :cvc2 => '589'

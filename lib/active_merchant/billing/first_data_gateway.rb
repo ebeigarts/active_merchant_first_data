@@ -37,11 +37,11 @@ module ActiveMerchant #:nodoc:
       # Perform a purchase, which is essentially an authorization and capture in a single operation.
       #
       # Registering of SMS transaction
-      # @param int $amount transaction amount in minor units, mandatory 
-      # @param int $currency transaction currency code, mandatory 
+      # @param int $amount transaction amount in minor units, mandatory
+      # @param int $currency transaction currency code, mandatory
       # @param string $ip clientís IP address, mandatory
       # @param string $desc description of transaction, optional
-      # @param string $language authorization language identificator, optional 
+      # @param string $language authorization language identificator, optional
       # @return string TRANSACTION_ID
       #
       def purchase(amount, params = {})
@@ -58,11 +58,11 @@ module ActiveMerchant #:nodoc:
       # charge the card.
       #
       # Registering of DMS authorisation
-      # @param int $amount transaction amount in minor units, mandatory 
-      # @param int $currency transaction currency code, mandatory 
+      # @param int $amount transaction amount in minor units, mandatory
+      # @param int $currency transaction currency code, mandatory
       # @param string $ip clientís IP address, mandatory
       # @param string $desc description of transaction, optional
-      # @param string $language authorization language identificator, optional 
+      # @param string $language authorization language identificator, optional
       # @return string TRANSACTION_ID
       #
       def authorize(amount, params = {})
@@ -80,8 +80,8 @@ module ActiveMerchant #:nodoc:
       #
       # Making of DMS transaction
       # @param int $auth_id id of previously made successeful authorisation
-      # @param int $amount transaction amount in minor units, mandatory 
-      # @param int $currency transaction currency code, mandatory 
+      # @param int $amount transaction amount in minor units, mandatory
+      # @param int $currency transaction currency code, mandatory
       # @param string $ip clientís IP address, mandatory
       # @param string $desc description of transaction, optional
       # @return string RESULT, RESULT_CODE, RRN, APPROVAL_CODE
@@ -117,7 +117,7 @@ module ActiveMerchant #:nodoc:
       #
       # Transaction reversal
       # @param int $trans_id transaction identifier, mandatory
-      # @param int $amount transaction amount in minor units, mandatory 
+      # @param int $amount transaction amount in minor units, mandatory
       # @return string RESULT, RESULT_CODE
       #
       def credit(amount, trans_id = nil)
