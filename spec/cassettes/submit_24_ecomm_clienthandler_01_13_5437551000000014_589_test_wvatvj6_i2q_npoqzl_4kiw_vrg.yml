@@ -1,0 +1,63 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :post
+    uri: https://secureshop-test.firstdata.lv:443/ecomm/ClientHandler
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      date: 
+        - Sun, 23 Sep 2012 10:33:10 GMT
+      set-cookie: 
+        - ATA=B1F183A7CA2C48E2011B012D74F78CA7; Expires=Wed, 23-Sep-2015 10:33:10 GMT
+        - full_info=78.84.31.166
+        - hist_info="wVatvj6/i2q/NpOQZl+4KiW/vrg="; Version=1
+      content-type: 
+        - text/html;charset=UTF-8
+      content-length: 
+        - "1727"
+    body: |
+      <HTML>
+       <HEAD>
+        <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+        <TITLE>Secure Payment Server</TITLE>
+       </HEAD>
+       <BODY onload="javascript:document.returnform.submit()">
+        <FORM action="/mdpaympi/MerchantServer" method="POST" name="returnform">
+         
+      	<INPUT name="version" type="hidden" value="2.0">
+      	<INPUT name="PAN" type="hidden" value="5437551000000014">
+      	<INPUT name="Ecom_Payment_Card_ExpDate_Year" type="hidden" value="13">
+      	<INPUT name="Ecom_Payment_Card_ExpDate_Month" type="hidden" value="01">
+      	<INPUT name="deviceCategory" type="hidden" value="0">
+      	<INPUT name="cardType" type="hidden" value="">
+              <INPUT name="expiry" type="hidden" value="1301">
+      	<INPUT name="purchAmount" type="hidden" value="1000">
+      	<INPUT name="currency" type="hidden" value="428">
+      	<INPUT name="exponent" type="hidden" value="2">
+      	<INPUT name="description" type="hidden" value="monthly subscription #24">
+      	<INPUT name="merchantID" type="hidden" value="8000898">
+      	<INPUT name="xid" type="hidden" value="wVatvj6/i2q/NpOQZl+4KiW/vrg=">
+      	<INPUT name="okUrl" type="hidden" value="https://secureshop-test.firstdata.lv:443/ecomm/ClientHandler">
+      	<INPUT name="failUrl" type="hidden" value="https://secureshop-test.firstdata.lv:443/ecomm/ClientHandler">
+      	<INPUT name="MD" type="hidden" value="">
+      	<INPUT name="recurFreq"type="hidden" value="1">
+        	<INPUT name="recurEnd"type="hidden" value="20130131">
+      	<INPUT name="digest" type="hidden" value="Hqn5P+P7TY7fLVNG96PJ0fjayT4=">
+      
+      	<DIV align="center">
+          		<H3>PAYMENT TRANSACTION PROCESSING ....</H3>
+          		<NOSCRIPT> Please click the submit button below.<BR>
+           			<INPUT name="submit" type="submit" value="Submit">
+          		</NOSCRIPT>
+         	</DIV>
+          </FORM>
+       </BODY>
+      </HTML>
+      
+
+    http_version: "1.1"

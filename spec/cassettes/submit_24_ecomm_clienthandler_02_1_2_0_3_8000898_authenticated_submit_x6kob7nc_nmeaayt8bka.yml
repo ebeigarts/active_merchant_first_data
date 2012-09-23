@@ -1,0 +1,41 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :post
+    uri: https://secureshop-test.firstdata.lv:443/ecomm/ClientHandler
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      date: 
+        - Sun, 23 Sep 2012 10:33:13 GMT
+      content-type: 
+        - text/html;charset=UTF-8
+      content-length: 
+        - "670"
+    body: |
+      <HTML>
+       <HEAD>
+      <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+      <TITLE>Secure Payment Server</TITLE>
+       </HEAD>
+       <BODY onload="javascript:document.returnform.submit()">
+        <FORM action="http://127.0.0.1:3000/card_payments/firstdata" method="POST" name="returnform">
+         <INPUT name="trans_id" type="hidden" value="wVatvj6/i2q/NpOQZl+4KiW/vrg=">
+         <INPUT name="Ucaf_Cardholder_Confirm" type="hidden" value="0">
+         
+        <DIV align="center">
+          <H3>PAYMENT TRANSACTION PROCESSING ....</H3>
+          <NOSCRIPT> Please click the submit button below.<BR>
+           <INPUT name="submit" type="submit" value="Submit">
+          </NOSCRIPT>
+         </DIV>
+        </FORM>
+       </BODY>
+      </HTML>
+      
+
+    http_version: "1.1"

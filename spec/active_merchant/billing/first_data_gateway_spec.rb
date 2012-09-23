@@ -33,6 +33,13 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       :validYEAR => @valid_year,
       :cvc2 => '589'
     }
+
+    @master_card_params_2 = {
+      :cardnr => '5437551000000020',
+      :validMONTH => '01',
+      :validYEAR => @valid_year,
+      :cvc2 => '589'
+    }
   end
 
   it "should be present" do
@@ -73,7 +80,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       end
 
       VCR.use_cassette('remote_1_credit') do
-        response = @gateway.credit(1000, @trans_id)
+        response = @gateway.refund(1000, @trans_id)
         response[:result].should == "OK"
         response[:result_code].should == "400"
       end
@@ -253,7 +260,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       end
 
       VCR.use_cassette('remote_10_credit') do
-        response = @gateway.credit(1000, @trans_id)
+        response = @gateway.refund(1000, @trans_id)
         response[:result].should == "OK"
         response[:result_code].should == "400"
       end
@@ -281,7 +288,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       end
 
       VCR.use_cassette('remote_11_credit') do
-        response = @gateway.credit(1000, @trans_id)
+        response = @gateway.refund(1000, @trans_id)
         response[:result].should == "OK"
         response[:result_code].should == "400"
       end
@@ -296,10 +303,394 @@ describe ActiveMerchant::Billing::FirstDataGateway do
     end
   end
 
-  def submit_form(url, params = {})
+
+  describe "Recurring" do
+    before(:each) do
+      @prefix = 'test1'
+      # uncomment to generate unique biller_client_id
+      # @prefix = Time.now.to_i.to_s
+    end
+
+    it "13) should register recurring payment with 3D-Secure authentication" do
+      @biller_client_id = @prefix + '_13'
+      VCR.use_cassette('remote_13_recurring') do
+        response = @gateway.recurring(1000,
+          :currency => 'LVL',
+          :client_ip_addr => @valid_ip,
+          :description => 'monthly subscription #13',
+          :biller_client_id => @biller_client_id,
+          :perspayee_expiry => '1222' # December 2022
+        )
+        response[:transaction_id].should =~ @valid_response[:trans_id]
+        @trans_id = response[:transaction_id]
+      end
+
+      VCR.use_cassette('remote_13_result_created') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "CREATED"
+      end
+
+      enter_credit_card_data(@trans_id, @master_card_params, 'submit_13')
+
+      VCR.use_cassette('remote_13_result_ok') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "OK"
+        response[:result_code].should == "000"
+        response[:recc_pmnt_id].should == @biller_client_id
+        response[:recc_pmnt_expiry].should == @master_card_params[:validMONTH] + @master_card_params[:validYEAR]
+      end
+    end
+
+    it "14) should register recurring payment with non-3D" do
+      @biller_client_id = @prefix + '_14'
+      VCR.use_cassette('remote_14_recurring') do
+        response = @gateway.recurring(1000,
+          :currency => 'LVL',
+          :client_ip_addr => @valid_ip,
+          :description => 'monthly subscription #14',
+          :biller_client_id => @biller_client_id,
+          :perspayee_expiry => '0119' # January 2019
+        )
+        response[:transaction_id].should =~ @valid_response[:trans_id]
+        @trans_id = response[:transaction_id]
+      end
+
+      VCR.use_cassette('remote_14_result_created') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "CREATED"
+      end
+
+      enter_credit_card_data(@trans_id, @visa_card_params, 'submit_14')
+
+      VCR.use_cassette('remote_14_result_ok') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "OK"
+        response[:result_code].should == "000"
+        response[:recc_pmnt_id].should == @biller_client_id
+        response[:recc_pmnt_expiry].should == @visa_card_params[:validMONTH] + @visa_card_params[:validYEAR]
+      end
+    end
+
+    it "15) should not register recurring payment with too large amount" do
+      @biller_client_id = @prefix + '_15'
+      VCR.use_cassette('remote_15_recurring') do
+        response = @gateway.recurring(9999,
+          :currency => 'LVL',
+          :client_ip_addr => @valid_ip,
+          :description => 'monthly subscription #15',
+          :biller_client_id => @biller_client_id,
+          :perspayee_expiry => '0119' # January 2019
+        )
+        response[:transaction_id].should =~ @valid_response[:trans_id]
+        @trans_id = response[:transaction_id]
+      end
+
+      VCR.use_cassette('remote_15_result_created') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "CREATED"
+      end
+
+      enter_credit_card_data(@trans_id, @visa_card_params, 'submit_15')
+
+      VCR.use_cassette('remote_15_result_failed') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "FAILED"
+        response[:result_code].should == "100"
+        response[:recc_pmnt_id].should == @biller_client_id
+        response[:recc_pmnt_expiry].should == @visa_card_params[:validMONTH] + @visa_card_params[:validYEAR]
+      end
+    end
+
+    it "16) should execute recurring payment from test case 13" do
+      @biller_client_id = @prefix + '_16'
+      VCR.use_cassette('remote_16_recurring') do
+        response = @gateway.recurring(1000,
+          :currency => 'LVL',
+          :client_ip_addr => @valid_ip,
+          :description => 'monthly subscription #16',
+          :biller_client_id => @biller_client_id,
+          :perspayee_expiry => '1222' # December 2022
+        )
+        response[:transaction_id].should =~ @valid_response[:trans_id]
+        @trans_id = response[:transaction_id]
+      end
+
+      enter_credit_card_data(@trans_id, @master_card_params, 'submit_16')
+
+      VCR.use_cassette('remote_16_result_ok') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "OK"
+      end
+
+      VCR.use_cassette('remote_16_execute_ok') do
+        response = @gateway.execute_recurring(1000,
+          :currency => 'LVL',
+          :client_ip_addr => @valid_ip,
+          :description => 'next monthly subscription #16',
+          :biller_client_id => @biller_client_id
+        )
+        response[:result].should == "OK"
+        response[:result_code].should == "000"
+      end
+
+    end
+
+    it "17) should not execute recurring payment with too large amount from test case 14" do
+      @biller_client_id = @prefix + '_17'
+      VCR.use_cassette('remote_17_recurring') do
+        response = @gateway.recurring(1000,
+          :currency => 'LVL',
+          :client_ip_addr => @valid_ip,
+          :description => 'monthly subscription #17',
+          :biller_client_id => @biller_client_id,
+          :perspayee_expiry => '0119' # January 2019
+        )
+        response[:transaction_id].should =~ @valid_response[:trans_id]
+        @trans_id = response[:transaction_id]
+      end
+
+      VCR.use_cassette('remote_17_result_created') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "CREATED"
+      end
+
+      enter_credit_card_data(@trans_id, @visa_card_params, 'submit_17')
+
+      VCR.use_cassette('remote_17_result_ok') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "OK"
+      end
+
+      VCR.use_cassette('remote_17_execute_failed') do
+        response = @gateway.execute_recurring(9999,
+          :currency => 'LVL',
+          :client_ip_addr => @valid_ip,
+          :description => 'next monthly subscription #17',
+          :biller_client_id => @biller_client_id
+        )
+        response[:result].should == "FAILED"
+        response[:result_code].should == "100"
+      end
+
+    end
+
+    # it "18) should register recurring payment with non-3D" do
+    #   pending "does not test anything new"
+    # end
+
+    it "19) should delete recurring payment from test case 14" do
+      @biller_client_id = @prefix + '_19'
+      VCR.use_cassette('remote_19_recurring') do
+        response = @gateway.recurring(1000,
+          :currency => 'LVL',
+          :client_ip_addr => @valid_ip,
+          :description => 'monthly subscription #19',
+          :biller_client_id => @biller_client_id,
+          :perspayee_expiry => '0119' # January 2019
+        )
+        response[:transaction_id].should =~ @valid_response[:trans_id]
+        @trans_id = response[:transaction_id]
+      end
+
+      enter_credit_card_data(@trans_id, @master_card_params, 'submit_19')
+
+      VCR.use_cassette('remote_19_result_ok') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "OK"
+      end
+
+      VCR.use_cassette('remote_19_execute_failed') do
+        response = @gateway.execute_recurring(9876,
+          :currency => 'LVL',
+          :client_ip_addr => @valid_ip,
+          :description => 'next monthly subscription #19',
+          :biller_client_id => @biller_client_id
+        )
+        response[:result].should == "FAILED"
+        response[:result_code].should == "200"
+      end
+
+    end
+
+    it "21) should overwrite card data together with payment" do
+      @biller_client_id = @prefix + '_21'
+      VCR.use_cassette('remote_21_recurring') do
+        response = @gateway.recurring(1000,
+          :currency => 'LVL',
+          :client_ip_addr => @valid_ip,
+          :description => 'monthly subscription #21',
+          :biller_client_id => @biller_client_id,
+          :perspayee_expiry => '1222' # December 2022
+        )
+        response[:transaction_id].should =~ @valid_response[:trans_id]
+        @trans_id = response[:transaction_id]
+      end
+
+      VCR.use_cassette('remote_21_result_created') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "CREATED"
+      end
+
+      enter_credit_card_data(@trans_id, @master_card_params, 'submit_21')
+
+      VCR.use_cassette('remote_21_result_ok') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "OK"
+      end
+
+      VCR.use_cassette('remote_21_overwrite') do
+        response = @gateway.recurring(1000,
+          :currency => 'LVL',
+          :client_ip_addr => @valid_ip,
+          :description => 'updated monthly subscription #21',
+          :biller_client_id => @biller_client_id,
+          :perspayee_expiry => '1222', # December 2022
+          :perspayee_overwrite => 1
+        )
+        response[:transaction_id].should =~ @valid_response[:trans_id]
+        @trans_id = response[:transaction_id]
+      end
+
+      VCR.use_cassette('remote_21_overwrite_created') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "CREATED"
+      end
+
+      enter_credit_card_data(@trans_id, @master_card_params_2, 'submit_21')
+
+      VCR.use_cassette('remote_21_overwrite_ok') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "OK"
+        response[:result_code].should == "000"
+        response[:recc_pmnt_id].should == @biller_client_id
+        response[:recc_pmnt_expiry].should == @master_card_params_2[:validMONTH] + @master_card_params_2[:validYEAR]
+      end
+
+    end
+
+    it "23) should overwrite card data without payment" do
+      @biller_client_id = @prefix + '_23'
+      VCR.use_cassette('remote_23_recurring') do
+        response = @gateway.recurring(1000,
+          :currency => 'LVL',
+          :client_ip_addr => @valid_ip,
+          :description => 'monthly subscription #23',
+          :biller_client_id => @biller_client_id,
+          :perspayee_expiry => '0119' # January 2019
+        )
+        response[:transaction_id].should =~ @valid_response[:trans_id]
+        @trans_id = response[:transaction_id]
+      end
+
+      VCR.use_cassette('remote_23_result_created') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "CREATED"
+      end
+
+      enter_credit_card_data(@trans_id, @visa_card_params, 'submit_23')
+
+      VCR.use_cassette('remote_23_result_ok') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "OK"
+      end
+
+      VCR.use_cassette('remote_23_overwrite') do
+        response = @gateway.update_recurring(
+          :currency => 'LVL',
+          :client_ip_addr => @valid_ip,
+          :description => 'updated monthly subscription #23',
+          :biller_client_id => @biller_client_id,
+          :perspayee_expiry => '1222' # December 2022
+        )
+        response[:transaction_id].should =~ @valid_response[:trans_id]
+        @trans_id = response[:transaction_id]
+      end
+
+      VCR.use_cassette('remote_23_overwrite_created') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "CREATED"
+      end
+
+      enter_credit_card_data(@trans_id, @master_card_params_2, 'submit_23')
+
+      VCR.use_cassette('remote_23_overwrite_ok') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "OK"
+        response[:result_code].should == "000"
+        response[:recc_pmnt_id].should == @biller_client_id
+        response[:recc_pmnt_expiry].should == @master_card_params_2[:validMONTH] + @master_card_params_2[:validYEAR]
+      end
+
+    end
+
+    it "24) reversal for test case 21" do
+      @biller_client_id = @prefix + '_24'
+      VCR.use_cassette('remote_24_recurring') do
+        response = @gateway.recurring(1000,
+          :currency => 'LVL',
+          :client_ip_addr => @valid_ip,
+          :description => 'monthly subscription #24',
+          :biller_client_id => @biller_client_id,
+          :perspayee_expiry => '1222' # December 2022
+        )
+        response[:transaction_id].should =~ @valid_response[:trans_id]
+        @trans_id = response[:transaction_id]
+      end
+
+      VCR.use_cassette('remote_24_result_created') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "CREATED"
+      end
+
+      enter_credit_card_data(@trans_id, @master_card_params, 'submit_24')
+
+      VCR.use_cassette('remote_24_result_ok') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "OK"
+      end
+
+      VCR.use_cassette('remote_24_overwrite') do
+        response = @gateway.recurring(1000,
+          :currency => 'LVL',
+          :client_ip_addr => @valid_ip,
+          :description => 'updated monthly subscription #24',
+          :biller_client_id => @biller_client_id,
+          :perspayee_expiry => '1222', # December 2022
+          :perspayee_overwrite => 1
+        )
+        response[:transaction_id].should =~ @valid_response[:trans_id]
+        @trans_id = response[:transaction_id]
+      end
+
+      enter_credit_card_data(@trans_id, @master_card_params_2, 'submit_24')
+
+      VCR.use_cassette('remote_24_overwrite_ok') do
+        response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        response[:result].should == "OK"
+      end
+
+      VCR.use_cassette('remote_24_refund') do
+        response = @gateway.refund(1000, @trans_id)
+        response[:result].should == "OK"
+        response[:result_code].should == "400"
+      end
+
+    end
+
+    it "25) should close business day" do
+      VCR.use_cassette('remote_25_close_business_day') do
+        response = @gateway.close_day
+        response[:result].should == "OK"
+        response[:result_code].should == "500"
+      end
+    end
+
+  end
+
+  def submit_form(url, params, cassette_prefix)
     ActiveMerchant::Billing::FirstDataGateway.logger.debug "SUBMIT_FORM: #{url}, params: #{params.inspect}"
     uri = URI.parse(url)
-    VCR.use_cassette("submit_#{uri.request_uri}_#{params.values.sort.join('_')}".downcase.parameterize('_')[0,90]) do
+    VCR.use_cassette("#{cassette_prefix}_#{uri.request_uri}_#{params.values.sort.join('_')}".downcase.parameterize('_')[0,90]) do
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
@@ -311,13 +702,13 @@ describe ActiveMerchant::Billing::FirstDataGateway do
   end
 
   # Fills up and submits remote forms.
-  def enter_credit_card_data(trans_id, params = {})
+  def enter_credit_card_data(trans_id, params = {}, cassette_prefix = 'submit')
     redirect_uri = URI(ActiveMerchant::Billing::FirstDataGateway.test_redirect_url)
     params.reverse_merge!({
       :trans_id => trans_id,
       :cardname => "TEST"
     })
-    response_body = submit_form(redirect_uri.to_s, params)
+    response_body = submit_form(redirect_uri.to_s, params, cassette_prefix)
     response_body.should =~ /PAYMENT TRANSACTION PROCESSING/
 
     # second, ... form
@@ -343,7 +734,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
         params["password"] = "password"
         params["submit"] = "OK"
       end
-      response_body = submit_form(url, params)
+      response_body = submit_form(url, params, cassette_prefix)
       # puts response_body
     end
   end

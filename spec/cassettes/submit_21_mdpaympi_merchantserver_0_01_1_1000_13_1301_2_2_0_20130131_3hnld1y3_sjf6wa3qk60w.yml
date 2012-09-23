@@ -1,0 +1,38 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :post
+    uri: https://secureshop-test.firstdata.lv:443/mdpaympi/MerchantServer
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      date: 
+        - Sun, 23 Sep 2012 10:32:42 GMT
+      content-type: 
+        - text/html; charset=UTF-8
+      content-length: 
+        - "1512"
+    body: |-
+      <HTML>
+       <HEAD>
+        <META http-equiv="content-type" content="text/html; charset=utf-8">
+        <TITLE>Secure Payment Server</TITLE>
+       </HEAD>
+      <!-- default/all_default/return_before.html -->
+       <BODY onload="javascript:document.returnform.submit()">
+        <FORM action="https://secureshop-test.firstdata.lv:443/ecomm/ClientHandler" method="POST" name="returnform">
+         <INPUT name="PAResSyntaxOK" type="hidden" value="false"><INPUT name="PAResVerified" type="hidden" value="false"><INPUT name="version" type="hidden" value="2.0"><INPUT name="merchantID" type="hidden" value="8000898"><INPUT name="xid" type="hidden" value="3HNLd1y3/sJF6WA3qk60wDc4pwg="><INPUT name="mdStatus" type="hidden" value="2"><INPUT name="mdErrorMsg" type="hidden" value="N-status from Directory Server: https://secureshop-test.firstdata.lv:9600/mdpayacs/vereq"><INPUT name="txstatus" type="hidden" value="N"><INPUT name="iReqCode" type="hidden" value=""><INPUT name="iReqDetail" type="hidden" value=""><INPUT name="vendorCode" type="hidden" value=""><INPUT name="eci" type="hidden" value=""><INPUT name="cavv" type="hidden" value=""><INPUT name="cavvAlgorithm" type="hidden" value=""><INPUT name="MD" type="hidden" value=""><INPUT name="digest" type="hidden" value="BROHSHcJ7s+G75WkEL5UVVRJ9x4=" autocomplete="off">
+         <DIV align="center">
+          <H3>PAYMENT TRANSACTION PROCESSING ....</H3>
+          <NOSCRIPT> Please click the submit button below.<BR>
+           <INPUT name="submit" type="submit" value="Submit">
+          </NOSCRIPT>
+         </DIV>
+        </FORM>
+       </BODY>
+      </HTML>
+    http_version: "1.1"

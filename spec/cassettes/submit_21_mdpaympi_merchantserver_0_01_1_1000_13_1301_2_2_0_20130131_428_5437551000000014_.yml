@@ -1,0 +1,42 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :post
+    uri: https://secureshop-test.firstdata.lv:443/mdpaympi/MerchantServer
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      date: 
+        - Sun, 23 Sep 2012 10:32:32 GMT
+      content-type: 
+        - text/html; charset=UTF-8
+      content-length: 
+        - "1304"
+    body: |-
+      <HTML>
+       <HEAD>
+        <META http-equiv="content-type" content="text/html; charset=utf-8">
+      <TITLE>MDpay default response template for web</TITLE>
+       </HEAD>
+      <BODY onload="javascript:document.returnform.submit()">
+      <FORM action="https://secureshop-test.firstdata.lv/mdpayacs/pareq" method="POST" name="returnform">
+         <INPUT name="PaReq" type="hidden" value="eJxVUltPwjAU/isLPprQy6YoOTRBedCIl4AxxLfRHd0S1o22Q/HXezo20KRJz/ed+wVec4s4W6JuLCp4ROfST4yKbDKQyeVIjORAwct0gVsFO7SuqIwSQz6UwHpITlbnqfEKUr29uX9SF4KLJAbWQSjR3s+UkOKCc6IPEExaosL0Z78uhroqgbUE6Kox3u5VIq+A9QAau1G59/WYsb8ugQZ2KuClCZKjMN9FpvKFe1ztdu8jd+3TRi/1/KE4fzbJ0+prAixYQJZ6VJILya9lHIl4HEt6wFoe0jLkV/O3eST4kHNq6cBAHRJND0DwoPnLAE3TotF9Fz0C/K4rg2RBKY4yZOi0Kivj880+cs3aaVvUnmYbnUlBtQQ1LMKKFHxY3DZtMNKcAKDJDhbUTEyPtEcKWP+f5nN7F9alPW0iFons9tXiUGVBQw9x2jIDABY8WHcKrDsUkv4d0C+CgcTJ">
+         <INPUT name="TermUrl" type="hidden" value="https://secureshop-test.firstdata.lv:443/mdpaympi/MerchantServer?msgid=2467172">
+         <INPUT name="MD" type="hidden" value="">
+         <!-- To support javascript unaware/disabled browsers -->
+         <CENTER>
+          <H3>PAYMENT TRANSACTION PROCESSING ....</H3>
+         </CENTER>
+         <NOSCRIPT>
+          <CENTER>Please click the submit button below.<BR>
+           <INPUT name="submit" type="submit" value="Submit">
+          </CENTER>
+         </NOSCRIPT>
+        </FORM>
+       </BODY>
+      </HTML>
+    http_version: "1.1"

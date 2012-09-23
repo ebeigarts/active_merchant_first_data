@@ -1,0 +1,137 @@
+--- 
+- !ruby/struct:VCR::HTTPInteraction 
+  request: !ruby/struct:VCR::Request 
+    method: :post
+    uri: https://secureshop-test.firstdata.lv:443/mdpayacs/pareq
+    body: 
+    headers: 
+  response: !ruby/struct:VCR::Response 
+    status: !ruby/struct:VCR::ResponseStatus 
+      code: 200
+      message: OK
+    headers: 
+      date: 
+        - Sun, 23 Sep 2012 10:32:19 GMT
+      pragma: 
+        - no-cache
+      expires: 
+        - Thu, 01 Jan 1970 00:00:00 GMT
+      cache-control: 
+        - no-cache
+      set-cookie: 
+        - JSESSIONID=CCBC40A4941577839A17A126C2A1FE57; Path=/mdpayacs; Secure
+      content-type: 
+        - text/html; charset=UTF-8
+      content-length: 
+        - "3142"
+    body: "\xEF\xBB\xBF<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\n\
+      <!--16000_default_www_login-->\n\n\
+      <html xmlns=\"http://www.w3.org/1999/xhtml\">\n\
+      <head>\n\
+      \t<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\n\
+      \t<title>Enter Your SecureCode\xC3\xA2\xC2\x84\xC2\xA2</title>\n\
+      \t<link rel=\"stylesheet\" type=\"text/css\" href=\"/template/tkb/fdl_style.css\" />\n\
+      \t<script type=\"text/javascript\" src=\"/template/tkb/scripts.js\"></script>\n\
+      \t<!--[if lte IE 7]>\n\
+      \t<link rel=\"stylesheet\" type=\"text/css\" href=\"/template/tkb/fdl_style_ie6.css\" />\n\
+      \t<![endif]-->\n\
+      \t\n\
+      </head>\n\
+      <body class=\"PopupWindow\">\n\
+      \t<div id=\"pop_up_window\">\n\
+      \t\t<div class=\"inner\">\n\
+      \t\t\t<img alt=\"logo\" src=\"/template/tkb/pic/misc/mastercard.gif\" align=\"left\" class=\"p_img\" />\n\
+      \t\t\t<img alt=\"fdl_logo\" src=\"/template/tkb/pic/misc/fdl_logo.jpg\" align=\"right\" class=\"p_img\" />\n\
+      \t\t\t\n\
+      \t\t\t<br clear=\"all\" />\n\
+      \t\t\t\n\
+      \t\t\t<div class=\"p_secure\">\n\
+      \t\t\t\tEnter Your SecureCode\xC3\xA2\xC2\x84\xC2\xA2\n\
+      \t\t\t</div>\n\
+      \t\n\
+      \t\t\t<br clear=\"all\" />\n\
+      \t\n\
+      \t\t\t<div class=\"p_intro\">\n\
+      \t\t\t\tPlease enter your MasterCard\xC3\x82\xC2\xAE SecureCode\xC3\xA2\xC2\x84\xC2\xA2 in the field below to confirm your identity for this purchase. This information is not shared with the merchant.\r\n\
+      \t\r\n\
+      \t \n\
+      \t\t\t</div>\n\
+      \t\t\t\n\
+      \t\t\t <form name=\"form1\" action=\"https://secureshop-test.firstdata.lv:443/mdpayacs/pareq;jsessionid=CCBC40A4941577839A17A126C2A1FE57\" method=\"POST\" 3dsaction=\"manual\">\n\
+      \t\t\t\t<table class=\"p_table\" cellpadding=\"0\" cellspacing=\"0\">\n\
+      \t\t\t\t\t<tr>\n\
+      \t\t\t\t\t\t<td class=\"p_left\">\n\
+      \t\t\t\t\t\t\tMerchant:\n\
+      \t\t\t\t\t\t</td>\n\
+      \t\t\t\t\t\t<td class=\"p_right\">\n\
+      \t\t\t\t\t\t\t<b>eazybi.com</b>\n\
+      \t\t\t\t\t\t</td>\n\
+      \t\t\t\t\t</tr>\n\
+      \t\t\t\t\t<tr>\n\
+      \t\t\t\t\t\t<td class=\"p_left\">\n\
+      \t\t\t\t\t\t\tAmount:\n\
+      \t\t\t\t\t\t</td>\n\
+      \t\t\t\t\t\t<td class=\"p_right\">\n\
+      \t\t\t\t\t\t\t<b>LVL 10.00</b>\n\
+      \t\t\t\t\t\t</td>\n\
+      \t\t\t\t\t</tr>\n\
+      \t\t\t\t\t<tr>\n\
+      \t\t\t\t\t\t<td class=\"p_left\">\n\
+      \t\t\t\t\t\t\tDate, time:\n\
+      \t\t\t\t\t\t</td>\n\
+      \t\t\t\t\t\t<td class=\"p_right\">\n\
+      \t\t\t\t\t\t\t<b>20120923 13:32:18</b>\n\
+      \t\t\t\t\t\t</td>\n\
+      \t\t\t\t\t</tr>\n\
+      \t\t\t\t\t<tr>\n\
+      \t\t\t\t\t\t<td class=\"p_left\">\n\
+      \t\t\t\t\t\t\tCard number (PAN):\n\
+      \t\t\t\t\t\t</td>\n\
+      \t\t\t\t\t\t<td class=\"p_right\">\n\
+      \t\t\t\t\t\t\t<b>XXXX XXXX XXXX 0014</b>\n\
+      \t\t\t\t\t\t</td>\n\
+      \t\t\t\t\t</tr>\n\
+      \t\t\t\t\t\n\
+      \t\t\t\t\t<tr>\n\
+      \t\t\t\t\t\t<td class=\"p_left\">\n\
+      \t\t\t\t\t\t\tPersonal Greeting:\n\
+      \t\t\t\t\t\t</td>\n\
+      \t\t\t\t\t\t<td class=\"p_right\">\n\
+      \t\t\t\t\t\t\t<b>Please enter &#39;password&#39;</b>\n\
+      \t\t\t\t\t\t</td>\n\
+      \t\t\t\t\t</tr>\n\
+      \t\t\t\t\t\n\
+      \t\t\t\t\t<tr>\n\
+      \t\t\t\t\t\t<td class=\"p_error\">\n\
+      \t\t\t\t\t\t\t<span></span>\n\
+      \t\t\t\t\t\t\t&nbsp;\n\
+      \t\t\t\t\t\t</td>\n\
+      \t\t\t\t\t</tr>\n\
+      \t\t\t\t\t<tr>\n\
+      \t\t\t\t\t\t<td class=\"p_left\">\n\
+      \t\t\t\t\t\t\tPlease enter SecureCode::\n\
+      \t\t\t\t\t\t</td>\n\
+      \t\t\t\t\t\t<td class=\"p_right\">\n\
+      \t\t\t\t\t\t\t<input type=\"password\" name=\"password\"/>\n\
+      \t\t\t\t\t\t\t<br />\n\
+      \t\t\t\t\t\t\t\n\
+      \t\t\t\t\t\t\t<a href=\"https://secureshop-test.firstdata.lv:443/mdpayacs/pareq;jsessionid=CCBC40A4941577839A17A126C2A1FE57?forgotchangepassword=forgotchangepassword\">Forgot/change my SecureCode</a>\n\
+      \t\t\t\t\t\t\t\t\n\
+      \t\t\t\t\t\t</td>\n\
+      \t\t\t\t\t</tr>\n\
+      \t\t\t\t\t<tr>\n\
+      \t\t\t\t\t\t<td class=\"p_left p_last\">\n\
+      \t\t\t\t\t\t\t<input type=\"submit\" class=\"CustomButton\" value=\"Help\" name=\"help\" alt=\"Help\" />\n\
+      \t\t\t\t\t\t</td>\n\
+      \t\t\t\t\t\t<td class=\"p_right p_last\">\n\
+      \t\t\t\t\t\t\t<input type=\"submit\" class=\"CustomButton\" value=\"&nbsp;&nbsp;&nbsp;OK&nbsp;&nbsp;&nbsp;\" name=\"submit\" alt=\"Submit\" />\n\
+      \t\t\t\t\t\t\t<input type=\"submit\" class=\"CustomButton\" value=\"Cancel\" name=\"cancel\" />\n\
+      \t\t\t\t\t\t</td>\n\
+      \t\t\t\t\t</tr>\n\
+      \t\t\t\t</table>\n\
+      \t\t\t</form>\n\
+      \t\t</div>\n\
+      \t</div>\n\
+      </body>\n\
+      </html>\n\n"
+    http_version: "1.1"
