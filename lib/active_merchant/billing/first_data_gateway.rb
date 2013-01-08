@@ -280,8 +280,10 @@ module ActiveMerchant #:nodoc:
         test? ? test_url : live_url
       end
 
-      def redirect_url
-        test? ? test_redirect_url : live_redirect_url
+      def redirect_url(trans_id = nil)
+        url = test? ? test_redirect_url : live_redirect_url
+        url += "?trans_id=#{CGI.escape trans_id}" if trans_id
+        url
       end
 
       private

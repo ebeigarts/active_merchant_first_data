@@ -685,6 +685,13 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       end
     end
 
+    it "26) return correct redirect url with transaction id" do
+      @gateway.redirect_url.should == @gateway.test_redirect_url
+    end
+
+    it "27) return correct redirect url without transaction id" do
+      @gateway.redirect_url("2SGip+TK/dVYe+XMSeQuECMs//S=").should == @gateway.test_redirect_url + "?trans_id=2SGip%2BTK%2FdVYe%2BXMSeQuECMs%2F%2FS%3D"
+    end
   end
 
   def submit_form(url, params, cassette_prefix)
