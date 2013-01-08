@@ -281,12 +281,9 @@ module ActiveMerchant #:nodoc:
       end
 
       def redirect_url(trans_id = nil)
-        trans_id_param = "?trans_id=#{CGI.escape trans_id}" if trans_id
-        if test?
-          trans_id ? test_redirect_url + trans_id_param : test_redirect_url
-        else
-          trans_id ? live_redirect_url + trans_id_param : live_redirect_url
-        end
+        url = test? ? test_redirect_url : live_redirect_url
+        url += "?trans_id=#{CGI.escape trans_id}" if trans_id
+        url
       end
 
       private
