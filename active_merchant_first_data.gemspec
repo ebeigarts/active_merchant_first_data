@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name        = "active_merchant_first_data"
-  s.version     = "1.0.0"
+  s.version     = "1.1.0"
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Edgars Beigarts"]
   s.email       = ["edgars.beigarts@makit.lv"]
