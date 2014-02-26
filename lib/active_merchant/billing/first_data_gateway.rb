@@ -15,7 +15,7 @@ module ActiveMerchant #:nodoc:
       self.display_name = 'First Data'
 
       self.ssl_strict = false
-      self.default_currency = '428' # LVL (http://en.wikipedia.org/wiki/ISO_4217)
+      self.default_currency = '978' # LVL (http://en.wikipedia.org/wiki/ISO_4217)
       self.money_format = :cents
 
       CURRENCY_CODES = {
