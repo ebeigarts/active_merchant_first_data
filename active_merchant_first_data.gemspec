@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 Gem::Specification.new do |s|
   s.name        = "active_merchant_first_data"
-  s.version     = "1.1.0"
+  s.version     = "1.2.0"
   s.platform    = Gem::Platform::RUBY
   s.authors     = ["Edgars Beigarts"]
   s.email       = ["edgars.beigarts@makit.lv"]
@@ -9,7 +9,7 @@ Gem::Specification.new do |s|
   s.summary     = "First Data Latvia gateway for Active Merchant"
   s.description = s.summary
 
-  s.files         = Dir.glob("{lib}/**/*") + %w(README.md LICENSE)
+  s.files         = Dir.glob("{lib}/**/*") + %w(README.md CHANGELOG.md LICENSE)
   s.require_paths = ["lib"]
 
   s.add_runtime_dependency "activemerchant", [">= 1.15.0"]
