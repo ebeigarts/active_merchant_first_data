@@ -24,7 +24,7 @@ require "active_merchant_first_data"
 1. Generate a new certificate
 
     ```bash
-    $ openssl req -newkey rsa:1024 -keyout spec/certs/1234567_key.pem -out spec/certs/1234567_req.pem -subj "/C=lv/O=example.com/CN=1234567" -outform PEM
+    $ openssl req -newkey rsa:2048 -keyout spec/certs/1234567_key.pem -out spec/certs/1234567_req.pem -subj "/C=lv/O=example.com/CN=1234567" -outform PEM
     Enter PEM pass phrase: 81f174259v45
     ```
 
