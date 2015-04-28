@@ -261,7 +261,6 @@ module ActiveMerchant #:nodoc:
           :command => :p,
           :amount => 0,
           :currency => default_currency,
-          :msg_type => 'SMS',
           :msg_type => 'AUTH',
           :perspayee_gen => 1,
           :perspayee_overwrite => 1
