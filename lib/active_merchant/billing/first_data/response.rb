@@ -12,7 +12,7 @@ module ActiveMerchant #:nodoc:
         end
 
         def recurring?
-          @parameters[:recc_pmnt_expiry].present? || @parameters[:recc_pmnt_id].present?
+          recc_pmnt_id.present? && recc_pmnt_expiry.present?
         end
 
         def result
@@ -25,6 +25,18 @@ module ActiveMerchant #:nodoc:
 
         def result_code
           @parameters[:result_code]
+        end
+
+        def recc_pmnt_id
+          @parameters[:recc_pmnt_id]
+        end
+
+        def recc_pmnt_expiry
+          @parameters[:recc_pmnt_expiry]
+        end
+
+        def three_dee_secure
+          @parameters[:'3dsecure']
         end
 
         def parameters

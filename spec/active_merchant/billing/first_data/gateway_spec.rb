@@ -60,13 +60,13 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
     it "1) should purchase for 10 EUR (Visa)" do
       VCR.use_cassette('remote_1_purchase') do
         response = @gateway.purchase(1000, :client_ip_addr => @valid_ip)
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       VCR.use_cassette('remote_1_result_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "CREATED"
+        expect(response.result).to eq "CREATED"
       end
 
       enter_credit_card_data(@trans_id, @visa_card_params)
@@ -74,99 +74,98 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
       VCR.use_cassette('remote_1_result_ok') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
 
-        expect(response[:result]).to eq "OK"
-        expect(response[:result_code]).to eq "000"
+        expect(response.result).to eq "OK"
+        expect(response.result_code).to eq "000"
       end
 
       VCR.use_cassette('remote_1_credit') do
         response = @gateway.refund(1000, @trans_id)
 
-
-        expect(response[:result]).to eq "OK"
-        expect(response[:result_code]).to eq "400"
+        expect(response.result).to eq "OK"
+        expect(response.result_code).to eq "400"
       end
     end
 
     it "2) should purchase for 10 EUR (Master)" do
       VCR.use_cassette('remote_2_purchase') do
         response = @gateway.purchase(1000, :client_ip_addr => @valid_ip)
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       VCR.use_cassette('remote_2_result_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "CREATED"
+        expect(response.result).to eq "CREATED"
       end
 
       enter_credit_card_data(@trans_id, @master_card_params)
 
       VCR.use_cassette('remote_2_result_ok') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "OK"
-        expect(response[:result_code]).to eq "000"
+        expect(response.result).to eq "OK"
+        expect(response.result_code).to eq "000"
       end
     end
 
     it "3) should authorize and capture 10 EUR (Visa)" do
       VCR.use_cassette('remote_3_authorize') do
         response = @gateway.authorize(1000, :client_ip_addr => @valid_ip)
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       VCR.use_cassette('remote_3_result_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "CREATED"
+        expect(response.result).to eq "CREATED"
       end
 
       enter_credit_card_data(@trans_id, @visa_card_params)
 
       VCR.use_cassette('remote_3_result_ok') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "OK"
-        expect(response[:result_code]).to eq "000"
+        expect(response.result).to eq "OK"
+        expect(response.result_code).to eq "000"
       end
 
       VCR.use_cassette('remote_3_capture') do
         response = @gateway.capture(1000, @trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "OK"
-        expect(response[:result_code]).to eq "000"
+        expect(response.result).to eq "OK"
+        expect(response.result_code).to eq "000"
       end
     end
 
     it "4) should authorize and capture 10 EUR (Master)" do
       VCR.use_cassette('remote_4_authorize') do
         response = @gateway.authorize(1000, :client_ip_addr => @valid_ip)
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       VCR.use_cassette('remote_4_result_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "CREATED"
+        expect(response.result).to eq "CREATED"
       end
 
       enter_credit_card_data(@trans_id, @master_card_params)
 
       VCR.use_cassette('remote_4_result_ok') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "OK"
-        expect(response[:result_code]).to eq "000"
+        expect(response.result).to eq "OK"
+        expect(response.result_code).to eq "000"
       end
 
       VCR.use_cassette('remote_4_capture') do
         response = @gateway.capture(1000, @trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "OK"
-        expect(response[:result_code]).to eq "000"
+        expect(response.result).to eq "OK"
+        expect(response.result_code).to eq "000"
       end
     end
 
     it "5) should be invalid with incorrect exp date" do
       VCR.use_cassette('remote_5_purchase') do
         response = @gateway.purchase(1000, :client_ip_addr => @valid_ip)
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       enter_credit_card_data(@trans_id, @visa_card_params.merge!({
@@ -176,15 +175,15 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
 
       VCR.use_cassette('remote_5_result_failed') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "FAILED"
+        expect(response.result).to eq "FAILED"
       end
     end
 
     it "6) should have successful 3D-Secure authentication" do
       VCR.use_cassette('remote_6_purchase') do
         response = @gateway.purchase(1000, :client_ip_addr => @valid_ip)
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       enter_credit_card_data(@trans_id, @master_card_params.merge!({
@@ -193,16 +192,16 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
 
       VCR.use_cassette('remote_6_result_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "OK"
-        expect(response[:'3dsecure']).to eq "AUTHENTICATED"
+        expect(response.result).to eq "OK"
+        expect(response.three_dee_secure).to eq "AUTHENTICATED"
       end
     end
 
     it "7) should have unsuccessful 3D-Secure authentication" do
       VCR.use_cassette('remote_7_purchase') do
         response = @gateway.purchase(1000, :client_ip_addr => @valid_ip)
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       enter_credit_card_data(@trans_id, @master_card_params.merge!({
@@ -212,16 +211,16 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
 
       VCR.use_cassette('remote_7_result_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "DECLINED"
-        expect(response[:'3dsecure']).to eq "DECLINED"
+        expect(response.result).to eq "DECLINED"
+        expect(response.three_dee_secure).to eq "DECLINED"
       end
     end
 
     it "8) should have 3D-Secure authentication error" do
       VCR.use_cassette('remote_8_purchase') do
         response = @gateway.purchase(1000, :client_ip_addr => @valid_ip)
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       enter_credit_card_data(@trans_id, @master_card_params.merge!({
@@ -231,8 +230,8 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
 
       VCR.use_cassette('remote_8_result_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "DECLINED"
-        expect(response[:'3dsecure']).to eq "DECLINED"
+        expect(response.result).to eq "DECLINED"
+        expect(response.three_dee_secure).to eq "DECLINED"
       end
     end
 
@@ -245,30 +244,30 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
     it "10) reversal for SMS authorization from case '1'" do
       VCR.use_cassette('remote_10_purchase') do
         response = @gateway.purchase(1000, :client_ip_addr => @valid_ip)
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       enter_credit_card_data(@trans_id, @visa_card_params)
 
       VCR.use_cassette('remote_10_result_ok') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "OK"
-        expect(response[:result_code]).to eq "000"
+        expect(response.result).to eq "OK"
+        expect(response.result_code).to eq "000"
       end
 
       VCR.use_cassette('remote_10_credit') do
         response = @gateway.refund(1000, @trans_id)
-        expect(response[:result]).to eq "OK"
-        expect(response[:result_code]).to eq "400"
+        expect(response.result).to eq "OK"
+        expect(response.result_code).to eq "400"
       end
     end
 
     it "11) reversal for DMS transaction from case '3'" do
       VCR.use_cassette('remote_11_authorize') do
         response = @gateway.authorize(1000, :client_ip_addr => @valid_ip)
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       enter_credit_card_data(@trans_id, @visa_card_params)
@@ -278,28 +277,28 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
         puts "Response"
         puts response.inspect
         puts response.class
-        expect(response[:result]).to eq "OK"
-        expect(response[:result_code]).to eq "000"
+        expect(response.result).to eq "OK"
+        expect(response.result_code).to eq "000"
       end
 
       VCR.use_cassette('remote_11_capture') do
         response = @gateway.capture(1000, @trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "OK"
-        expect(response[:result_code]).to eq "000"
+        expect(response.result).to eq "OK"
+        expect(response.result_code).to eq "000"
       end
 
       VCR.use_cassette('remote_11_credit') do
         response = @gateway.refund(1000, @trans_id)
-        expect(response[:result]).to eq "OK"
-        expect(response[:result_code]).to eq "400"
+        expect(response.result).to eq "OK"
+        expect(response.result_code).to eq "400"
       end
     end
 
     it "12) should close business day" do
       VCR.use_cassette('remote_12_close_business_day') do
         response = @gateway.close_day
-        expect(response[:result]).to eq "OK"
-        expect(response[:result_code]).to eq "500"
+        expect(response.result).to eq "OK"
+        expect(response.result_code).to eq "500"
       end
     end
   end
@@ -322,23 +321,23 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
           :biller_client_id => @biller_client_id,
           :perspayee_expiry => '1222' # December 2022
         )
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       VCR.use_cassette('remote_13_result_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "CREATED"
+        expect(response.result).to eq "CREATED"
       end
 
       enter_credit_card_data(@trans_id, @master_card_params, 'submit_13')
 
       VCR.use_cassette('remote_13_result_ok') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "OK"
-        expect(response[:result_code]).to eq "000"
-        expect(response[:recc_pmnt_id]).to eq @biller_client_id
-        expect(response[:recc_pmnt_expiry]).to eq @master_card_params[:validMONTH] + @master_card_params[:validYEAR]
+        expect(response.result).to eq "OK"
+        expect(response.result_code).to eq "000"
+        expect(response.recc_pmnt_id).to eq @biller_client_id
+        expect(response.recc_pmnt_expiry).to eq @master_card_params[:validMONTH] + @master_card_params[:validYEAR]
       end
     end
 
@@ -352,23 +351,23 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
           :biller_client_id => @biller_client_id,
           :perspayee_expiry => '0119' # January 2019
         )
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       VCR.use_cassette('remote_14_result_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "CREATED"
+        expect(response.result).to eq "CREATED"
       end
 
       enter_credit_card_data(@trans_id, @visa_card_params, 'submit_14')
 
       VCR.use_cassette('remote_14_result_ok') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "OK"
-        expect(response[:result_code]).to eq "000"
-        expect(response[:recc_pmnt_id]).to eq @biller_client_id
-        expect(response[:recc_pmnt_expiry]).to eq @visa_card_params[:validMONTH] + @visa_card_params[:validYEAR]
+        expect(response.result).to eq "OK"
+        expect(response.result_code).to eq "000"
+        expect(response.recc_pmnt_id).to eq @biller_client_id
+        expect(response.recc_pmnt_expiry).to eq @visa_card_params[:validMONTH] + @visa_card_params[:validYEAR]
       end
     end
 
@@ -382,23 +381,23 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
           :biller_client_id => @biller_client_id,
           :perspayee_expiry => '0119' # January 2019
         )
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       VCR.use_cassette('remote_15_result_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "CREATED"
+        expect(response.result).to eq "CREATED"
       end
 
       enter_credit_card_data(@trans_id, @visa_card_params, 'submit_15')
 
       VCR.use_cassette('remote_15_result_failed') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "FAILED"
-        expect(response[:result_code]).to eq "100"
-        expect(response[:recc_pmnt_id]).to eq @biller_client_id
-        expect(response[:recc_pmnt_expiry]).to eq @visa_card_params[:validMONTH] + @visa_card_params[:validYEAR]
+        expect(response.result).to eq "FAILED"
+        expect(response.result_code).to eq "100"
+        expect(response.recc_pmnt_id).to eq @biller_client_id
+        expect(response.recc_pmnt_expiry).to eq @visa_card_params[:validMONTH] + @visa_card_params[:validYEAR]
       end
     end
 
@@ -412,15 +411,15 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
           :biller_client_id => @biller_client_id,
           :perspayee_expiry => '1222' # December 2022
         )
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       enter_credit_card_data(@trans_id, @master_card_params, 'submit_16')
 
       VCR.use_cassette('remote_16_result_ok') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "OK"
+        expect(response.result).to eq "OK"
       end
 
       VCR.use_cassette('remote_16_execute_ok') do
@@ -430,8 +429,8 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
           :description => 'next monthly subscription #16',
           :biller_client_id => @biller_client_id
         )
-        expect(response[:result]).to eq "OK"
-        expect(response[:result_code]).to eq "000"
+        expect(response.result).to eq "OK"
+        expect(response.result_code).to eq "000"
       end
 
     end
@@ -446,20 +445,20 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
           :biller_client_id => @biller_client_id,
           :perspayee_expiry => '0119' # January 2019
         )
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       VCR.use_cassette('remote_17_result_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "CREATED"
+        expect(response.result).to eq "CREATED"
       end
 
       enter_credit_card_data(@trans_id, @visa_card_params, 'submit_17')
 
       VCR.use_cassette('remote_17_result_ok') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "OK"
+        expect(response.result).to eq "OK"
       end
 
       VCR.use_cassette('remote_17_execute_failed') do
@@ -469,8 +468,8 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
           :description => 'next monthly subscription #17',
           :biller_client_id => @biller_client_id
         )
-        expect(response[:result]).to eq "FAILED"
-        expect(response[:result_code]).to eq "100"
+        expect(response.result).to eq "FAILED"
+        expect(response.result_code).to eq "100"
       end
 
     end
@@ -489,15 +488,15 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
           :biller_client_id => @biller_client_id,
           :perspayee_expiry => '0119' # January 2019
         )
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       enter_credit_card_data(@trans_id, @master_card_params, 'submit_19')
 
       VCR.use_cassette('remote_19_result_ok') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "OK"
+        expect(response.result).to eq "OK"
       end
 
       VCR.use_cassette('remote_19_execute_failed') do
@@ -507,8 +506,8 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
           :description => 'next monthly subscription #19',
           :biller_client_id => @biller_client_id
         )
-        expect(response[:result]).to eq "FAILED"
-        expect(response[:result_code]).to eq "200"
+        expect(response.result).to eq "FAILED"
+        expect(response.result_code).to eq "200"
       end
 
     end
@@ -523,20 +522,20 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
           :biller_client_id => @biller_client_id,
           :perspayee_expiry => '1222' # December 2022
         )
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       VCR.use_cassette('remote_21_result_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "CREATED"
+        expect(response.result).to eq "CREATED"
       end
 
       enter_credit_card_data(@trans_id, @master_card_params, 'submit_21')
 
       VCR.use_cassette('remote_21_result_ok') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "OK"
+        expect(response.result).to eq "OK"
       end
 
       VCR.use_cassette('remote_21_overwrite') do
@@ -548,23 +547,23 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
           :perspayee_expiry => '1222', # December 2022
           :perspayee_overwrite => 1
         )
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       VCR.use_cassette('remote_21_overwrite_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "CREATED"
+        expect(response.result).to eq "CREATED"
       end
 
       enter_credit_card_data(@trans_id, @master_card_params_2, 'submit_21')
 
       VCR.use_cassette('remote_21_overwrite_ok') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "OK"
-        expect(response[:result_code]).to eq "000"
-        expect(response[:recc_pmnt_id]).to eq @biller_client_id
-        expect(response[:recc_pmnt_expiry]).to eq @master_card_params_2[:validMONTH] + @master_card_params_2[:validYEAR]
+        expect(response.result).to eq "OK"
+        expect(response.result_code).to eq "000"
+        expect(response.recc_pmnt_id).to eq @biller_client_id
+        expect(response.recc_pmnt_expiry).to eq @master_card_params_2[:validMONTH] + @master_card_params_2[:validYEAR]
       end
 
     end
@@ -579,20 +578,20 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
           :biller_client_id => @biller_client_id,
           :perspayee_expiry => '0119' # January 2019
         )
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       VCR.use_cassette('remote_23_result_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "CREATED"
+        expect(response.result).to eq "CREATED"
       end
 
       enter_credit_card_data(@trans_id, @visa_card_params, 'submit_23')
 
       VCR.use_cassette('remote_23_result_ok') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "OK"
+        expect(response.result).to eq "OK"
       end
 
       VCR.use_cassette('remote_23_overwrite') do
@@ -603,23 +602,23 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
           :biller_client_id => @biller_client_id,
           :perspayee_expiry => '1222' # December 2022
         )
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       VCR.use_cassette('remote_23_overwrite_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "CREATED"
+        expect(response.result).to eq "CREATED"
       end
 
       enter_credit_card_data(@trans_id, @master_card_params_2, 'submit_23')
 
       VCR.use_cassette('remote_23_overwrite_ok') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "OK"
-        expect(response[:result_code]).to eq "000"
-        expect(response[:recc_pmnt_id]).to eq @biller_client_id
-        expect(response[:recc_pmnt_expiry]).to eq @master_card_params_2[:validMONTH] + @master_card_params_2[:validYEAR]
+        expect(response.result).to eq "OK"
+        expect(response.result_code).to eq "000"
+        expect(response.recc_pmnt_id).to eq @biller_client_id
+        expect(response.recc_pmnt_expiry).to eq @master_card_params_2[:validMONTH] + @master_card_params_2[:validYEAR]
       end
 
     end
@@ -634,20 +633,20 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
           :biller_client_id => @biller_client_id,
           :perspayee_expiry => '1222' # December 2022
         )
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       VCR.use_cassette('remote_24_result_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "CREATED"
+        expect(response.result).to eq "CREATED"
       end
 
       enter_credit_card_data(@trans_id, @master_card_params, 'submit_24')
 
       VCR.use_cassette('remote_24_result_ok') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "OK"
+        expect(response.result).to eq "OK"
       end
 
       VCR.use_cassette('remote_24_overwrite') do
@@ -659,21 +658,21 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
           :perspayee_expiry => '1222', # December 2022
           :perspayee_overwrite => 1
         )
-        expect(response[:transaction_id]).to match @valid_response[:trans_id]
-        @trans_id = response[:transaction_id]
+        expect(response.transaction_id).to match @valid_response[:trans_id]
+        @trans_id = response.transaction_id
       end
 
       enter_credit_card_data(@trans_id, @master_card_params_2, 'submit_24')
 
       VCR.use_cassette('remote_24_overwrite_ok') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        expect(response[:result]).to eq "OK"
+        expect(response.result).to eq "OK"
       end
 
       VCR.use_cassette('remote_24_refund') do
         response = @gateway.refund(1000, @trans_id)
-        expect(response[:result]).to eq "OK"
-        expect(response[:result_code]).to eq "400"
+        expect(response.result).to eq "OK"
+        expect(response.result_code).to eq "400"
       end
 
     end
@@ -681,8 +680,8 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
     it "25) should close business day" do
       VCR.use_cassette('remote_25_close_business_day') do
         response = @gateway.close_day
-        expect(response[:result]).to eq "OK"
-        expect(response[:result_code]).to eq "500"
+        expect(response.result).to eq "OK"
+        expect(response.result_code).to eq "500"
       end
     end
 
@@ -703,6 +702,8 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       response = http.post(uri.request_uri, params.collect { |key, value| "#{key}=#{CGI.escape(value.to_s)}" }.join("&"), {})
+      # puts "RESPONSE INSPECT: #{response.inspect}"
+      # puts "RESPONSE CLASS: #{response.class}"
       # puts "RESPONSE CODE: #{response.code}"
       # puts "RESPONSE BODY: #{response.body}"
       response.body
@@ -717,7 +718,7 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
       :cardname => "TEST"
     })
     response_body = submit_form(redirect_uri.to_s, params, cassette_prefix)
-    expect(response_body).to match /PAYMENT TRANSACTION PROCESSING/
+    response_body.should =~ /PAYMENT TRANSACTION PROCESSING/
 
     # second, ... form
     while response_body =~ /action="([^"]+)/
