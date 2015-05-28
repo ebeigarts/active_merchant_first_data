@@ -1,5 +1,3 @@
-require "active_merchant"
-
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     module FirstData
