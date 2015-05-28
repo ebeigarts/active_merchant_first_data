@@ -17,7 +17,7 @@ RSpec.configure do |config|
 end
 
 ActiveMerchant::Billing::Base.gateway_mode = :test
-ActiveMerchant::Billing::FirstDataGateway.ssl_strict = true
-ActiveMerchant::Billing::FirstDataGateway.logger = Logger.new(STDOUT)
-ActiveMerchant::Billing::FirstDataGateway.logger.level = Logger::WARN
-# ActiveMerchant::Billing::FirstDataGateway.wiredump_device = STDOUT
+ActiveMerchant::Billing::FirstData::Gateway.ssl_strict = true
+ActiveMerchant::Billing::FirstData::Gateway.logger = Logger.new(STDOUT)
+ActiveMerchant::Billing::FirstData::Gateway.logger.level = Logger::WARN
+# ActiveMerchant::Billing::FirstData::Gateway.wiredump_device = STDOUT
