@@ -268,7 +268,7 @@ module ActiveMerchant #:nodoc:
             # FIXME: test cases 17 and 19 return unnecessary error even when result and result_code are present
             # should be removed when this issue is fixed on gataway side
             raise Error.new(response) if !response[:error].blank? && response[:result_code].blank?
-            response
+            ActiveMerchant::Billing::FirstData::Response.new response
           end
 
           def post_data(params)
