@@ -342,7 +342,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       @biller_client_id = @prefix + '_14'
       VCR.use_cassette('remote_14_recurring') do
         response = @gateway.recurring(1000,
-          :currency => 'LVL',
+          :currency => 'EUR',
           :client_ip_addr => @valid_ip,
           :description => 'monthly subscription #14',
           :biller_client_id => @biller_client_id,
@@ -372,7 +372,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       @biller_client_id = @prefix + '_15'
       VCR.use_cassette('remote_15_recurring') do
         response = @gateway.recurring(9999,
-          :currency => 'LVL',
+          :currency => 'EUR',
           :client_ip_addr => @valid_ip,
           :description => 'monthly subscription #15',
           :biller_client_id => @biller_client_id,
@@ -402,7 +402,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       @biller_client_id = @prefix + '_16'
       VCR.use_cassette('remote_16_recurring') do
         response = @gateway.recurring(1000,
-          :currency => 'LVL',
+          :currency => 'EUR',
           :client_ip_addr => @valid_ip,
           :description => 'monthly subscription #16',
           :biller_client_id => @biller_client_id,
@@ -421,7 +421,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
 
       VCR.use_cassette('remote_16_execute_ok') do
         response = @gateway.execute_recurring(1000,
-          :currency => 'LVL',
+          :currency => 'EUR',
           :client_ip_addr => @valid_ip,
           :description => 'next monthly subscription #16',
           :biller_client_id => @biller_client_id
@@ -436,7 +436,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       @biller_client_id = @prefix + '_17'
       VCR.use_cassette('remote_17_recurring') do
         response = @gateway.recurring(1000,
-          :currency => 'LVL',
+          :currency => 'EUR',
           :client_ip_addr => @valid_ip,
           :description => 'monthly subscription #17',
           :biller_client_id => @biller_client_id,
@@ -460,7 +460,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
 
       VCR.use_cassette('remote_17_execute_failed') do
         response = @gateway.execute_recurring(9999,
-          :currency => 'LVL',
+          :currency => 'EUR',
           :client_ip_addr => @valid_ip,
           :description => 'next monthly subscription #17',
           :biller_client_id => @biller_client_id
@@ -479,7 +479,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       @biller_client_id = @prefix + '_19'
       VCR.use_cassette('remote_19_recurring') do
         response = @gateway.recurring(1000,
-          :currency => 'LVL',
+          :currency => 'EUR',
           :client_ip_addr => @valid_ip,
           :description => 'monthly subscription #19',
           :biller_client_id => @biller_client_id,
@@ -498,7 +498,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
 
       VCR.use_cassette('remote_19_execute_failed') do
         response = @gateway.execute_recurring(9876,
-          :currency => 'LVL',
+          :currency => 'EUR',
           :client_ip_addr => @valid_ip,
           :description => 'next monthly subscription #19',
           :biller_client_id => @biller_client_id
@@ -513,7 +513,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       @biller_client_id = @prefix + '_21'
       VCR.use_cassette('remote_21_recurring') do
         response = @gateway.recurring(1000,
-          :currency => 'LVL',
+          :currency => 'EUR',
           :client_ip_addr => @valid_ip,
           :description => 'monthly subscription #21',
           :biller_client_id => @biller_client_id,
@@ -537,7 +537,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
 
       VCR.use_cassette('remote_21_overwrite') do
         response = @gateway.recurring(1000,
-          :currency => 'LVL',
+          :currency => 'EUR',
           :client_ip_addr => @valid_ip,
           :description => 'updated monthly subscription #21',
           :biller_client_id => @biller_client_id,
@@ -569,7 +569,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       @biller_client_id = @prefix + '_23'
       VCR.use_cassette('remote_23_recurring') do
         response = @gateway.recurring(1000,
-          :currency => 'LVL',
+          :currency => 'EUR',
           :client_ip_addr => @valid_ip,
           :description => 'monthly subscription #23',
           :biller_client_id => @biller_client_id,
@@ -593,7 +593,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
 
       VCR.use_cassette('remote_23_overwrite') do
         response = @gateway.update_recurring(
-          :currency => 'LVL',
+          :currency => 'EUR',
           :client_ip_addr => @valid_ip,
           :description => 'updated monthly subscription #23',
           :biller_client_id => @biller_client_id,
@@ -624,7 +624,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       @biller_client_id = @prefix + '_24'
       VCR.use_cassette('remote_24_recurring') do
         response = @gateway.recurring(1000,
-          :currency => 'LVL',
+          :currency => 'EUR',
           :client_ip_addr => @valid_ip,
           :description => 'monthly subscription #24',
           :biller_client_id => @biller_client_id,
@@ -648,7 +648,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
 
       VCR.use_cassette('remote_24_overwrite') do
         response = @gateway.recurring(1000,
-          :currency => 'LVL',
+          :currency => 'EUR',
           :client_ip_addr => @valid_ip,
           :description => 'updated monthly subscription #24',
           :biller_client_id => @biller_client_id,
