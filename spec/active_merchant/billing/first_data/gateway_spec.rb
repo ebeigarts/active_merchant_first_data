@@ -718,7 +718,7 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
       :cardname => "TEST"
     })
     response_body = submit_form(redirect_uri.to_s, params, cassette_prefix)
-    response_body.should =~ /PAYMENT TRANSACTION PROCESSING/
+    expect(response_body).to match /PAYMENT TRANSACTION PROCESSING/
 
     # second, ... form
     while response_body =~ /action="([^"]+)/
