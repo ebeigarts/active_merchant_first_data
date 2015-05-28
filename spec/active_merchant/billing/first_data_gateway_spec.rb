@@ -312,7 +312,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       @biller_client_id = @prefix + '_13'
       VCR.use_cassette('remote_13_recurring') do
         response = @gateway.recurring(1000,
-          :currency => 'LVL',
+          :currency => 'EUR',
           :client_ip_addr => @valid_ip,
           :description => 'monthly subscription #13',
           :biller_client_id => @biller_client_id,
