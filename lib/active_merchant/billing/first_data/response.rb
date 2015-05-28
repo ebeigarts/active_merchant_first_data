@@ -39,6 +39,10 @@ module ActiveMerchant #:nodoc:
           @parameters[:'3dsecure']
         end
 
+        def result_text
+          FDL_RESPONSE_CODES["c#{result_code}".to_sym]
+        end
+
         def parameters
           @parameters
         end

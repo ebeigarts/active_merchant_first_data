@@ -30,9 +30,6 @@ describe ActiveMerchant::Billing::FirstData::Response do
       @response = ActiveMerchant::Billing::FirstData::Response.new @response_hash
     end
 
-    # three_dee_secure
-    # parameters
-
     it "should return same parameters as passed" do
       expect(@response.parameters).to eq @response_hash
     end
@@ -48,6 +45,11 @@ describe ActiveMerchant::Billing::FirstData::Response do
     it "should return correct result for response" do
       expect(@response.result_code).to eq @result_code
     end
+
+    it "should return result_text Approved for result_code 000" do
+      expect(@response.result_text).to eq "Approved"
+    end
+
   end
 
   context "business logic methods" do
