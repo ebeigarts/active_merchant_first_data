@@ -3,6 +3,7 @@ require "active_merchant"
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     class FirstDataGateway < Gateway
+      mattr_accessor :ssl_strict
       class_attribute :test_url, :live_url, :test_redirect_url, :live_redirect_url, :pem_file, :pem_password
 
       self.test_redirect_url = 'https://secureshop-test.firstdata.lv/ecomm/ClientHandler'
@@ -14,8 +15,7 @@ module ActiveMerchant #:nodoc:
       self.homepage_url = 'http://www.firstdata.lv/'
       self.display_name = 'First Data'
 
-      self.ssl_strict = false
-      self.default_currency = '978' # LVL (http://en.wikipedia.org/wiki/ISO_4217)
+      self.default_currency = '978' # EUR (http://en.wikipedia.org/wiki/ISO_4217)
       self.money_format = :cents
 
       CURRENCY_CODES = {

@@ -274,6 +274,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
 
       VCR.use_cassette('remote_11_result_ok') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
+        puts response.inspect
         expect(response[:result]).to eq "OK"
         expect(response[:result_code]).to eq "000"
       end
