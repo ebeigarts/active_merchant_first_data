@@ -128,6 +128,10 @@ module ActiveMerchant #:nodoc:
           parameters[:result]
         end
 
+        def authorization
+          transaction_id
+        end
+
         def transaction_id
           parameters[:transaction_id]
         end
