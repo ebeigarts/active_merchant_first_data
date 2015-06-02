@@ -15,6 +15,25 @@ describe ActiveMerchant::Billing::FirstData::Response do
     @three_dee_secure = "AUTHENTICATED"
   end
 
+  context "backwards compatability" do
+    before :all do
+      @response_hash = ActiveSupport::HashWithIndifferentAccess.new
+      @response_hash[:transaction_id] = @transaction_id
+      @response_hash[:result_code] = @result_code
+
+      @response_old_style = ActiveMerchant::Billing::FirstDataResponse.new @response_hash
+    end
+
+    it "should be able to access transaction_id from response object as would from hash" do
+      expect(@response_old_style[:transaction_id]).to eq @transaction_id
+    end
+
+    it "should be return correct result message" do
+      expect(@response_old_style.result_message).to eq "Approved"
+    end
+
+  end
+
   context "basic" do
     before :all do
       @response_hash = ActiveSupport::HashWithIndifferentAccess.new
