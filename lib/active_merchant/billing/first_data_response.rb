@@ -124,10 +124,6 @@ module ActiveMerchant #:nodoc:
         self.parameters=params
       end
 
-      def success?
-        success
-      end
-
       def recurring?
         recc_pmnt_id.present? && recc_pmnt_expiry.present?
       end
