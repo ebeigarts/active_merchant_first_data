@@ -12,7 +12,7 @@ describe ActiveMerchant::Billing::FirstDataResponse do
     @result_created = "CREATED"
 
     @result_code = "000"
-    @three_dee_secure = "AUTHENTICATED"
+    @_3d_secure = "AUTHENTICATED"
   end
 
   context "backwards compatability" do
@@ -44,7 +44,7 @@ describe ActiveMerchant::Billing::FirstDataResponse do
       @response_hash[:result] = @result_created
       @response_hash[:recc_pmnt_id] = @recc_pmnt_id
       @response_hash[:recc_pmnt_expiry] = @recc_pmnt_expiry
-      @response_hash[:'3dsecure'] = @three_dee_secure
+      @response_hash[:'3dsecure'] = @_3d_secure
 
       @response = ActiveMerchant::Billing::FirstDataResponse.new @response_hash
     end
@@ -58,7 +58,7 @@ describe ActiveMerchant::Billing::FirstDataResponse do
     end
 
     it "should return transaction_id" do
-      expect(@response.three_dee_secure).to eq @three_dee_secure
+      expect(@response._3d_secure).to eq @_3d_secure
     end
 
     it "should return correct result for response" do

@@ -107,8 +107,10 @@ module ActiveMerchant #:nodoc:
           "950" => "Decline reason message: violation of business arrangement"
         }
 
-        def initialize response_parameters
-          self.parameters=response_parameters
+        attr_accessor :parameters
+
+        def initialize params, options={}
+          self.parameters=params
         end
 
         def ok?
@@ -123,31 +125,13 @@ module ActiveMerchant #:nodoc:
           recc_pmnt_id.present? && recc_pmnt_expiry.present?
         end
 
-        def result
-          parameters[:result]
+        [:recc_pmnt_expiry, :recc_pmnt_id, :result, :result_code, :transaction_id].each do |name|
+          define_method name do
+            parameters[name]
+          end
         end
 
-        def authorization
-          transaction_id
-        end
-
-        def transaction_id
-          parameters[:transaction_id]
-        end
-
-        def result_code
-          parameters[:result_code]
-        end
-
-        def recc_pmnt_id
-          parameters[:recc_pmnt_id]
-        end
-
-        def recc_pmnt_expiry
-          parameters[:recc_pmnt_expiry]
-        end
-
-        def three_dee_secure
+        def _3d_secure
           parameters[:'3dsecure']
         end
 
@@ -163,22 +147,9 @@ module ActiveMerchant #:nodoc:
           RESPONSE_CODES[result_code]
         end
 
-        def []
-          parameters
-        end
-
         def [](value)
           parameters[value]
         end
-
-        def parameters
-          @parameters
-        end
-
-        private
-          def parameters=(value)
-            @parameters=value
-          end
       end
   end
 end

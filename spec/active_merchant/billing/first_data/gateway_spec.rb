@@ -210,7 +210,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       VCR.use_cassette('remote_6_result_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
         expect(response.result).to eq "OK"
-        expect(response.three_dee_secure).to eq "AUTHENTICATED"
+        expect(response._3d_secure).to eq "AUTHENTICATED"
       end
     end
 
@@ -229,7 +229,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       VCR.use_cassette('remote_7_result_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
         expect(response.result).to eq "DECLINED"
-        expect(response.three_dee_secure).to eq "DECLINED"
+        expect(response._3d_secure).to eq "DECLINED"
       end
     end
 
@@ -248,7 +248,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       VCR.use_cassette('remote_8_result_created') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
         expect(response.result).to eq "DECLINED"
-        expect(response.three_dee_secure).to eq "DECLINED"
+        expect(response._3d_secure).to eq "DECLINED"
       end
     end
 
