@@ -124,8 +124,8 @@ module ActiveMerchant #:nodoc:
         self.parameters=params
       end
 
-      def ok?
-        result == "OK"
+      def success?
+        success
       end
 
       def recurring?
