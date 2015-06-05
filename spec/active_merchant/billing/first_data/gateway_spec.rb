@@ -1,15 +1,15 @@
 # rspec spec/active_merchant/billing/first_data/gateway_spec.rb
 require "spec_helper"
 
-describe ActiveMerchant::Billing::FirstData::Gateway do
+describe ActiveMerchant::Billing::FirstDataGateway do
   before do
     if ENV['MERCHANT_ID']
-      @gateway = ActiveMerchant::Billing::FirstData::Gateway.new(
+      @gateway = ActiveMerchant::Billing::FirstDataGateway.new(
         :pem => File.read("#{File.dirname(__FILE__)}/../../certs/#{ENV['MERCHANT_ID']}_keystore.pem"),
         :pem_password => ENV['PEM_PASSWORD']
       )
     else
-      @gateway = ActiveMerchant::Billing::FirstData::Gateway.new(:pem => nil, :pem_password => nil)
+      @gateway = ActiveMerchant::Billing::FirstDataGateway.new(:pem => nil, :pem_password => nil)
     end
 
     @valid_ip = '127.0.0.1'
@@ -46,12 +46,12 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
   context "backwards compability" do
     before :all do
       if ENV['MERCHANT_ID']
-        @gateway = ActiveMerchant::Billing::FirstData::Gateway.new(
+        @gateway = ActiveMerchant::Billing::FirstDataGateway.new(
           :pem => File.read("#{File.dirname(__FILE__)}/../../certs/#{ENV['MERCHANT_ID']}_keystore.pem"),
           :pem_password => ENV['PEM_PASSWORD']
         )
       else
-        @gateway = ActiveMerchant::Billing::FirstData::Gateway.new(:pem => nil, :pem_password => nil)
+        @gateway = ActiveMerchant::Billing::FirstDataGateway.new(:pem => nil, :pem_password => nil)
       end
     end
 
@@ -712,7 +712,7 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
   end
 
   def submit_form(url, params, cassette_prefix)
-    ActiveMerchant::Billing::FirstData::Gateway.logger.debug "SUBMIT_FORM: #{url}, params: #{params.inspect}"
+    ActiveMerchant::Billing::FirstDataGateway.logger.debug "SUBMIT_FORM: #{url}, params: #{params.inspect}"
     uri = URI.parse(url)
     VCR.use_cassette("#{cassette_prefix}_#{uri.request_uri}_#{params.values.sort.join('_')}".downcase.parameterize('_')[0,90]) do
       http = Net::HTTP.new(uri.host, uri.port)
@@ -729,7 +729,7 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
 
   # Fills up and submits remote forms.
   def enter_credit_card_data(trans_id, params = {}, cassette_prefix = 'submit')
-    redirect_uri = URI(ActiveMerchant::Billing::FirstData::Gateway.test_redirect_url)
+    redirect_uri = URI(ActiveMerchant::Billing::FirstDataGateway.test_redirect_url)
     params.reverse_merge!({
       :trans_id => trans_id,
       :cardname => "TEST"
@@ -743,7 +743,7 @@ describe ActiveMerchant::Billing::FirstData::Gateway do
       if url.start_with?("/")
         url = redirect_uri.scheme + "://" + redirect_uri.host + url
       end
-      ActiveMerchant::Billing::FirstData::Gateway.logger.debug "URL:" + url.to_s
+      ActiveMerchant::Billing::FirstDataGateway.logger.debug "URL:" + url.to_s
       # break if we are redirecting back
       unless url.include?(redirect_uri.host)
         # sleep 5

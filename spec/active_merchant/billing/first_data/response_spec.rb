@@ -1,7 +1,7 @@
 # rspec spec/active_merchant/billing/first_data/response_spec.rb
 require "spec_helper"
 
-describe ActiveMerchant::Billing::FirstData::Response do
+describe ActiveMerchant::Billing::FirstDataResponse do
 
   before :all do
     @transaction_id = "e+oClP4em8uBDozaZ4CBBbipEcM="
@@ -46,7 +46,7 @@ describe ActiveMerchant::Billing::FirstData::Response do
       @response_hash[:recc_pmnt_expiry] = @recc_pmnt_expiry
       @response_hash[:'3dsecure'] = @three_dee_secure
 
-      @response = ActiveMerchant::Billing::FirstData::Response.new @response_hash
+      @response = ActiveMerchant::Billing::FirstDataResponse.new @response_hash
     end
 
     it "should return same parameters as passed" do
@@ -80,8 +80,8 @@ describe ActiveMerchant::Billing::FirstData::Response do
         @ok_response_hash[:result] = @result_ok
         @nok_response_hash[:result] = @result_created
 
-        @ok_response = ActiveMerchant::Billing::FirstData::Response.new @ok_response_hash
-        @nok_response = ActiveMerchant::Billing::FirstData::Response.new @nok_response_hash
+        @ok_response = ActiveMerchant::Billing::FirstDataResponse.new @ok_response_hash
+        @nok_response = ActiveMerchant::Billing::FirstDataResponse.new @nok_response_hash
       end
 
       it "should be ok if result is ok" do
@@ -109,8 +109,8 @@ describe ActiveMerchant::Billing::FirstData::Response do
         @ok_response_hash[:recc_pmnt_id] = @recc_pmnt_id
         @ok_response_hash[:recc_pmnt_expiry] = @recc_pmnt_expiry
 
-        @ok_response = ActiveMerchant::Billing::FirstData::Response.new @ok_response_hash
-        @nok_response = ActiveMerchant::Billing::FirstData::Response.new @nok_response_hash
+        @ok_response = ActiveMerchant::Billing::FirstDataResponse.new @ok_response_hash
+        @nok_response = ActiveMerchant::Billing::FirstDataResponse.new @nok_response_hash
       end
 
       it "should be recurring if recc_pmnt_id and recc_pmnt_expiry present" do
