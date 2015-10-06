@@ -291,9 +291,6 @@ describe ActiveMerchant::Billing::FirstDataGateway do
 
       VCR.use_cassette('remote_11_result_ok') do
         response = @gateway.result(@trans_id, :client_ip_addr => @valid_ip)
-        puts "Response"
-        puts response.inspect
-        puts response.class
         expect(response.result).to eq "OK"
         expect(response.result_code).to eq "000"
       end
@@ -719,10 +716,6 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE
       response = http.post(uri.request_uri, params.collect { |key, value| "#{key}=#{CGI.escape(value.to_s)}" }.join("&"), {})
-      # puts "RESPONSE INSPECT: #{response.inspect}"
-      # puts "RESPONSE CLASS: #{response.class}"
-      # puts "RESPONSE CODE: #{response.code}"
-      # puts "RESPONSE BODY: #{response.body}"
       response.body
     end
   end
@@ -761,7 +754,6 @@ describe ActiveMerchant::Billing::FirstDataGateway do
         params["submit"] = "OK"
       end
       response_body = submit_form(url, params, cassette_prefix)
-      # puts response_body
     end
   end
 end

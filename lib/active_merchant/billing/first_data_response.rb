@@ -106,7 +106,7 @@ module ActiveMerchant #:nodoc:
         "950" => "Decline reason message: violation of business arrangement"
       }
 
-      attr_accessor :authorization, :error_code, :error_message, :parameters, :success, :message
+      attr_accessor :authorization, :error_code, :error_message, :success, :message
 
       def initialize params, options={}
         success = params[:result] == 'OK'
@@ -120,8 +120,6 @@ module ActiveMerchant #:nodoc:
         super success, message, params, options.merge(
           authorization: params[:transaction_id]
         )
-
-        self.parameters=params
       end
 
       def recurring?
@@ -130,24 +128,20 @@ module ActiveMerchant #:nodoc:
 
       [:recc_pmnt_expiry, :recc_pmnt_id, :result, :result_code, :transaction_id].each do |name|
         define_method name do
-          parameters[name]
+          params[name]
         end
       end
 
       def _3d_secure
-        parameters[:'3dsecure']
+        params[:'3dsecure']
       end
 
       def result_message
-        result_text
-      end
-
-      def result_text
-        RESPONSE_CODES[result_code]
+        message
       end
 
       def [](value)
-        parameters[value]
+        params[value]
       end
     end
   end

@@ -284,33 +284,33 @@ module ActiveMerchant #:nodoc:
       end
 
       private
-        def lookup_currency(params)
-          params[:currency] = CURRENCY_CODES[params[:currency]] || params[:currency]
-        end
+      def lookup_currency(params)
+        params[:currency] = CURRENCY_CODES[params[:currency]] || params[:currency]
+      end
 
-        # Convert HTTP response body to a Ruby Hash.
-        def parse(body)
-          results = ActiveSupport::HashWithIndifferentAccess.new
-          body.split(/[\r\n]+/).each do |pair|
-            key, val = pair.split(": ")
-            results[key.downcase] = val
-          end
-          results
+      # Convert HTTP response body to a Ruby Hash.
+      def parse(body)
+        results = ActiveSupport::HashWithIndifferentAccess.new
+        body.split(/[\r\n]+/).each do |pair|
+          key, val = pair.split(": ")
+          results[key.downcase] = val
         end
+        results
+      end
 
-        def commit(params = {})
-          response = parse(ssl_post(endpoint_url, post_data(params)))
-          # FIXME: test cases 17 and 19 return unnecessary error even when result and result_code are present
-          # should be removed when this issue is fixed on gataway side
-          raise Error.new(response) if !response[:error].blank? && response[:result_code].blank?
-          ActiveMerchant::Billing::FirstDataResponse.new response
-        end
+      def commit(params = {})
+        response = parse(ssl_post(endpoint_url, post_data(params)))
+        # FIXME: test cases 17 and 19 return unnecessary error even when result and result_code are present
+        # should be removed when this issue is fixed on gataway side
+        raise Error.new(response) if !response[:error].blank? && response[:result_code].blank?
+        ActiveMerchant::Billing::FirstDataResponse.new response
+      end
 
-        def post_data(params)
-          post = PostData.new
-          params.each { |k, v| post[k] = v }
-          post.to_s
-        end
+      def post_data(params)
+        post = PostData.new
+        params.each { |k, v| post[k] = v }
+        post.to_s
+      end
     end
   end
 end
