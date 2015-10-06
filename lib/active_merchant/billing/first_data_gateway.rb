@@ -1,21 +1,7 @@
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     class FirstDataGateway < Gateway
-      class_attribute :test_url, :live_url, :test_redirect_url, :live_redirect_url, :pem_file, :pem_password
-
-      self.test_redirect_url = 'https://secureshop-test.firstdata.lv/ecomm/ClientHandler'
-      self.live_redirect_url = 'https://secureshop.firstdata.lv/ecomm/ClientHandler'
-
-      self.test_url = 'https://secureshop-test.firstdata.lv:8443/ecomm/MerchantHandler'
-      self.live_url = 'https://secureshop.firstdata.lv:8443/ecomm/MerchantHandler'
-
-      self.homepage_url = 'http://www.firstdata.lv/'
-      self.display_name = 'First Data'
-
-      self.ssl_strict = false
-      self.default_currency = '978' # EUR (http://en.wikipedia.org/wiki/ISO_4217)
-      self.money_format = :cents
-
+      # http://en.wikipedia.org/wiki/ISO_4217
       CURRENCY_CODES = {
         'ADP' => '020', 'AED' => '784', 'AFA' => '004', 'ALL' => '008', 'AMD' => '051',
         'ANG' => '532', 'AOA' => '973', 'ARS' => '032', 'AUD' => '036', 'AWG' => '533',
@@ -53,6 +39,21 @@ module ActiveMerchant #:nodoc:
         'XOF' => '952', 'XPF' => '953', 'YER' => '886', 'YUM' => '891', 'ZAR' => '710',
         'ZMK' => '894', 'ZWD' => '716'
       }
+
+      class_attribute :test_url, :live_url, :test_redirect_url, :live_redirect_url, :pem_file, :pem_password
+
+      self.test_redirect_url = 'https://secureshop-test.firstdata.lv/ecomm/ClientHandler'
+      self.live_redirect_url = 'https://secureshop.firstdata.lv/ecomm/ClientHandler'
+
+      self.test_url = 'https://secureshop-test.firstdata.lv:8443/ecomm/MerchantHandler'
+      self.live_url = 'https://secureshop.firstdata.lv:8443/ecomm/MerchantHandler'
+
+      self.homepage_url = 'http://www.firstdata.lv/'
+      self.display_name = 'First Data'
+
+      self.ssl_strict = false
+      self.default_currency = CURRENCY_CODES['EUR']
+      self.money_format = :cents
 
       class Error < StandardError
         attr_reader :response
