@@ -43,23 +43,6 @@ describe ActiveMerchant::Billing::FirstDataGateway do
     }
   end
 
-  context "backwards compability" do
-    before :all do
-      if ENV['MERCHANT_ID']
-        @gateway = ActiveMerchant::Billing::FirstDataGateway.new(
-          :pem => File.read("#{File.dirname(__FILE__)}/../../certs/#{ENV['MERCHANT_ID']}_keystore.pem"),
-          :pem_password => ENV['PEM_PASSWORD']
-        )
-      else
-        @gateway = ActiveMerchant::Billing::FirstDataGateway.new(:pem => nil, :pem_password => nil)
-      end
-    end
-
-    it "should be present" do
-      expect(@gateway.present?).to be true
-    end
-  end
-
   it "should be present" do
     expect(@gateway.present?).to be true
   end

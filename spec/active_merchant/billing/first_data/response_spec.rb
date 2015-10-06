@@ -49,8 +49,8 @@ describe ActiveMerchant::Billing::FirstDataResponse do
       @response = ActiveMerchant::Billing::FirstDataResponse.new @response_hash
     end
 
-    it "should return same parameters as passed" do
-      expect(@response.parameters).to eq @response_hash
+    it "should return same params as passed" do
+      expect(@response.params).to eq @response_hash
     end
 
     it "should return transaction_id" do
@@ -65,8 +65,8 @@ describe ActiveMerchant::Billing::FirstDataResponse do
       expect(@response.result_code).to eq @result_code
     end
 
-    it "should return result_text Approved for result_code 000" do
-      expect(@response.result_text).to eq "Approved"
+    it "should return message Approved for result_code 000" do
+      expect(@response.message).to eq "Approved"
     end
 
   end
@@ -85,11 +85,11 @@ describe ActiveMerchant::Billing::FirstDataResponse do
       end
 
       it "should be ok if result is ok" do
-        expect(@ok_response.ok?).to eq true
+        expect(@ok_response.success?).to eq true
       end
 
       it "other than ok should not be ok" do
-        expect(@nok_response.ok?).to eq false
+        expect(@nok_response.success?).to eq false
       end
 
       it "should return correct result for ok response" do

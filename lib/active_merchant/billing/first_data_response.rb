@@ -110,10 +110,10 @@ module ActiveMerchant #:nodoc:
 
       def initialize params, options={}
         success = params[:result] == 'OK'
-        message = RESPONSE_CODES[options[:result_code]]
+        message = RESPONSE_CODES[params[:result_code]]
 
         unless success
-          error_code = options[:result_code]
+          error_code = params[:result_code]
           error_message = message
         end
 
