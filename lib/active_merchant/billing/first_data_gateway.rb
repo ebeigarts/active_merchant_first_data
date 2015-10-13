@@ -1,5 +1,3 @@
-require "active_merchant"
-
 module ActiveMerchant #:nodoc:
   module Billing #:nodoc:
     class FirstDataGateway < Gateway
@@ -287,7 +285,6 @@ module ActiveMerchant #:nodoc:
       end
 
       private
-
       def lookup_currency(params)
         params[:currency] = CURRENCY_CODES[params[:currency]] || params[:currency]
       end
@@ -307,7 +304,7 @@ module ActiveMerchant #:nodoc:
         # FIXME: test cases 17 and 19 return unnecessary error even when result and result_code are present
         # should be removed when this issue is fixed on gataway side
         raise Error.new(response) if !response[:error].blank? && response[:result_code].blank?
-        response
+        ActiveMerchant::Billing::FirstDataResponse.new response
       end
 
       def post_data(params)
