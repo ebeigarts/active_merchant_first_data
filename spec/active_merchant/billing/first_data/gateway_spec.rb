@@ -706,6 +706,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
   # Fills up and submits remote forms.
   def enter_credit_card_data(trans_id, params = {}, cassette_prefix = 'submit')
     redirect_uri = URI(ActiveMerchant::Billing::FirstDataGateway.test_redirect_url)
+    redirect_domain = redirect_uri.host.split('.')[-2..-1].join('.')
     params.reverse_merge!({
       :trans_id => trans_id,
       :cardname => "TEST"
@@ -721,7 +722,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
       end
       ActiveMerchant::Billing::FirstDataGateway.logger.debug "URL:" + url.to_s
       # break if we are redirecting back
-      unless url.include?(redirect_uri.host)
+      unless url.include?(redirect_domain)
         # sleep 5
         break
       end
