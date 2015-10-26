@@ -1,3 +1,7 @@
+## 1.3.0
+
+*   Response as an object instead of a hash (@Sacristan, #6)
+
 ## 1.2.0
 
 *   Changed default currency from LVL to EUR

@@ -13,10 +13,20 @@ $ gem install active_merchant_first_data
 
 ```ruby
 require "active_merchant_first_data"
-@gateway = ActiveMerchant::Billing::FirstDataGateway.new(
-  :pem => "1234567_keystore.pem"
-  :pem_password => "5x64jq8n234c"
+
+gateway = ActiveMerchant::Billing::FirstDataGateway.new(
+  pem: "1234567_keystore.pem"
+  pem_password: "5x64jq8n234c"
 )
+
+# Authorize for 10 euros (1000 euro cents)
+response = gateway.authorize(1000, client_ip_addr: '127.0.0.1')
+
+# Use this url to enter credit card data
+gateway.redirect_url(response.authorization)
+
+# Capture the money
+gateway.capture(1000, response.authorization, client_ip_addr: '127.0.0.1')
 ```
 
 ## First Data test environment setup
