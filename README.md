@@ -1,7 +1,7 @@
 First Data Latvia gateway for Active Merchant
 =============================================
 
-[![Continuous Integration status](https://secure.travis-ci.org/ebeigarts/active_merchant_first_data.png)](http://travis-ci.org/ebeigarts/active_merchant_first_data)
+[![Build Status](https://travis-ci.org/ebeigarts/active_merchant_first_data.svg?branch=master)](https://travis-ci.org/ebeigarts/active_merchant_first_data)
 
 ## Install
 
