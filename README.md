@@ -15,7 +15,7 @@ $ gem install active_merchant_first_data
 require "active_merchant_first_data"
 
 gateway = ActiveMerchant::Billing::FirstDataGateway.new(
-  pem:  File.read("1234567_keystore.pem")
+  pem:  File.read("1234567_keystore.pem"),
   pem_password: "5x64jq8n234c"
 )
 
