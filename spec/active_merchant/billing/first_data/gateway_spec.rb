@@ -694,7 +694,7 @@ describe ActiveMerchant::Billing::FirstDataGateway do
   def submit_form(url, params, cassette_prefix)
     ActiveMerchant::Billing::FirstDataGateway.logger.debug "SUBMIT_FORM: #{url}, params: #{params.inspect}"
     uri = URI.parse(url)
-    VCR.use_cassette("#{cassette_prefix}_#{uri.request_uri}_#{params.values.sort.join('_')}".downcase.parameterize('_')[0,90]) do
+    VCR.use_cassette("#{cassette_prefix}_#{uri.request_uri}_#{params.values.sort.join('_')}".downcase.parameterize(separator: '_')[0,90]) do
       http = Net::HTTP.new(uri.host, uri.port)
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_NONE

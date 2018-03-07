@@ -18,4 +18,5 @@ Gem::Specification.new do |s|
   s.add_development_dependency "rspec", ["~> 3.2"]
   s.add_development_dependency "vcr", ["~> 1.11"]
   s.add_development_dependency "fakeweb", ["~> 1.3"]
+  s.add_development_dependency "activesupport", [">= 5"]
 end
