@@ -63,3 +63,24 @@ gateway.capture(1000, response.authorization, client_ip_addr: '127.0.0.1')
     ```
 
 5. [Set your WAN IP address](https://secureshop-test.firstdata.lv/report/merchantlist.do)
+
+## Mocking in (RSpec) tests
+Perhaps the best way to mock responses in tests is to disallow remote connections altogether
+and then control what responses specific requests receive.
+
+For example, to mock response to the `#purchase` request with WebMock you'd:
+
+```rb
+before do
+  body = {
+    "TRANSACTION_ID" => "e+oClP4em8uBDozaZ4CBBbipEcM="
+  }.merge(options).map{ |k, v| "#{k}: #{v}" }.join("\n")
+
+  WebMock.stub_request(:post, %r'firstdata.lv').
+    with(body: hash_including("command" => "v")).
+    to_return(body: body)
+end
+```
+
+Peruse `first_data_gateway.rb` to find out which command letters map to which methods.  
+Additionally, have a look at `spec/cassettes` for response body examples.
